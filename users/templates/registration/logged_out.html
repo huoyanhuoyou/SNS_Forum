@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>退出登录</title>
+    <style>
+        body{overflow: hidden;}
+    .back-button{
+  padding: 14px 16px;
+  color: #fff;
+  border: none;
+  border-radius: 30px;
+  text-decoration: none;
+  background: #6E50E9;
+  position: absolute;
+  width: 300px;
+  height: 50px;
+  text-align: center;
+  line-height: 40px;
+  font-size: 16px;
+  top: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+
+    }
+    .back-button:hover{
+    background-color: mediumpurple;
+    }
+    </style>
+</head>
+<body>
+{% extends "bbs/base.html" %}
+
+{% block content %}
+    <div class="content-box">
+        <p style="text-align: center; font-size: 22px;margin-top: 100px">已退出登录...</p>
+        <a class="back-button" href="{% url 'bbs:index' %}">返回首页 &raquo</a>
+    </div>
+{% endblock content %}
+</body>
+</html>

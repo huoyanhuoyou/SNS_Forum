@@ -1,0 +1,205 @@
+{% extends "bbs/base.html" %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>注册</title>
+    <style>
+        body{
+        background-image:url("https://img1.baidu.com/it/u=1503207338,4077841019&fm=253&fmt=auto&app=138&f=JPEG?w=889&h=500");
+        margin: 0;
+        padding: 0;
+        background-repeat: no-repeat;
+        background-size: cover;
+        overflow: hidden;
+    }
+
+     register-part{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width:100%;
+	height: 100%;
+	background-position: center;
+	background-attachment: fixed;
+    margin-top: 0px;
+}
+.main{
+	width:400px;
+	height:670px;
+	background: rgb(255,255,255,.5);
+	border-radius: 8px;
+}
+.title{
+	width:100%;
+	height:40px;
+	border-bottom:1px solid #999;
+	text-align: center;
+	line-height: 40px;
+	font-weight: 500;
+	font-size: 16px;
+}
+.inp{
+	display: flex;
+	width: calc(100% - 60px);
+	height:40px;
+	background: #fff;
+	border-radius: 4px;
+	margin:0 auto;
+	margin-bottom:10px;
+    padding: 2px 8px;
+    border: 2px solid #e3e3e3;
+    outline: none;
+    font-size: 16px;
+}
+.inp1{
+	margin-top:30px;
+}
+.left{
+	width:40px;
+	height:100%;
+}
+.left > img{
+	width:26px;
+	height:26px;
+	margin-top:7px;
+	margin-left:7px;
+}
+.right{
+	width:calc(100% - 40px);
+	height:100%;
+}
+.right > input{
+	width:100%;
+	height:100%;
+	background: #00000000;
+	border:0;
+	line-height: 40px;
+	font-style: inherit;
+	outline: 0;
+}
+
+button{
+	width: calc(100% - 60px);
+	height:40px;
+	background: #6E50E9;
+	color:#fff;
+	text-align: center;
+	line-height: 40px;
+	font-size: 16px;
+	margin:0 auto;
+	border-radius: 4px;
+	margin-top:10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+    </style>
+</head>
+<body>
+
+    <div class="content-box">
+        {% if form.erors %}
+            <p>请输入正确的用户名或密码！</p>
+        {% endif %}
+
+        <form action="{% url 'users:register' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <register-part>
+            <div class="main">
+                <div class="title">注册</div>
+                <div class="inp inp1">
+                    <div class="left">
+					        <img src="/static/img/user.png">
+				    </div>
+                    <div class="right">
+                        <input type="text" name="username" maxlength="20" autocomplete="username" required="" id="id_username" placeholder="请输入用户名">
+                    </div>
+                </div>
+                <div class="inp">
+				        <div class="left">
+					        <img src="/static/img/anquan.png">
+				        </div>
+				        <div class="right">
+                        <input type="password" name="password1" autocomplete="new-password" required="" id="id_password1" placeholder="请输入密码">
+                        </div>
+                </div>
+                <div class="inp">
+				        <div class="left">
+					        <img src="/static/img/anquan.png">
+				        </div>
+				        <div class="right">
+                            <input type="password" name="password2" autocomplete="new-password" required="" id="id_password2" placeholder="请再次输入密码">
+                        </div>
+                </div>
+
+                <!-- ... 其他输入字段 ... -->
+                     <div class="inp">
+				        <div class="right">
+                           <input type="email" name="email" autocomplete="email" required="" id="id_email" placeholder="请输入邮箱">
+                        </div>
+                     </div>
+                     <button style="width:100px " type="button" id="send_code_btn">发送验证码</button>
+
+                     <div style="margin-top: 10px" class="inp">
+				        <div  class="right">
+                           <input  type="text" name="verification_code" required="" id="id_verification_code" placeholder="请输入验证码">
+                        </div>
+                     </div>
+
+                <!-- ... 其他输入字段 ... -->
+
+
+                    <span style="margin-left: 20px">上传头像: </span>
+                    <div style="margin-top: 5px" class="inp">
+				        <div  class="right">
+                        <input type="file" name="avatar" id="id_avatar">
+                        </div>
+                    </div>
+                    <div class="inp">
+				        <div  class="right">
+                        <input type="text" name="Sno" autocomplete="Sno" required="" id="id_Sno" placeholder="请输入学号">
+                        </div>
+                    </div>
+                <div class="inp">
+				        <div  class="right">
+                        <input type="text" name="phone" autocomplete="phone" required="" id="id_phone" placeholder="请输入手机号">
+                        </div>
+                </div>
+
+                <button id="myButton" name="submit">注 册</button>
+                <input type="hidden" name="text" value="{% url 'bbs:index' %}"/>
+            </div>
+            </register-part>
+        </form>
+    </div>
+    <!-- 确保已引入 jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#send_code_btn").click(function () {
+                var email = $("#id_email").val();
+                $.ajax({
+                    url: "{% url 'users:send_verification_code' %}",
+                    type: "POST",
+                    data: {
+                        email: email,
+                        csrfmiddlewaretoken: '{{ csrf_token }}',
+                    },
+                    success: function (data) {
+                        if (data.success) {
+                            alert("验证码已发送到你的邮箱");
+                        } else {
+                            alert("错误: " + data.error);
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
+{% endblock content %}
