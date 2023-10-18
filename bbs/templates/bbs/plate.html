@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="/static/img/bbs_demo_icon.ico"/>
+    <title>板块</title>
+</head>
+
+<style>
+  h1{
+      font-family: 'Brush Script MT', cursive;
+      font-size: 50px;
+      border-bottom: 2px dashed;
+      margin-top: 10px;
+  }
+  .to-post{
+  padding: 10px;
+  color: #fff;
+  border-radius: 30px;
+  text-decoration: none;
+  background: #6E50E9;
+  position: absolute;
+  width: 150px;
+  height: 15px;
+  line-height: 40px;
+  font-size: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: -15px;
+    }
+    .to-post:hover{
+    background-color: mediumpurple;
+    }
+</style>
+<body>
+{% extends "bbs/base.html" %}
+
+{% block content %}
+    <div class="content-box">
+        <div class="page-head">
+            <h1>forum {{ plate.text }}</h1>
+            <a class="to-post" href="{% url 'bbs:post' plate.id %}">发表帖子 &raquo</a>
+        </div>
+       <br><br><br>
+        <div class="content-list" >
+            {% for article in articles %}
+                <div style="border-radius:10px;margin: 5px" class="content-card">
+                    <div class="card-head">
+                        <span>{{ article.owner.username }}</span>
+                        <small>{{ article.date_added|date:'M d, Y H:i' }}</small>
+                    </div>
+                    <div class="card-body">
+                        <b><a class="article-link" href="{% url 'bbs:article' article.id 1 %}">{{ article.title }}</a></b>
+                        <span>{{ article }}</span>
+                    </div>
+                </div>
+            {% empty %}
+                <p>暂无更多内容</p>
+            {% endfor %}
+        </div>
+        {% if previous_page > 0 %}
+            <div class="turn-page">
+                <ul>
+                    {% if present_page != 1 %}
+                        <li class="previous-page"><a href="{% url 'bbs:plate' plate.id previous_page %}">上一页</a></li>
+                    {% endif %}
+                    {% for page in page_range %}
+                        {% if page == present_page %}
+                            <li><a class="active" href="{% url 'bbs:plate' plate.id page %}">{{ page }}</a> </li>
+                        {% else %}
+                            <li><a href="{% url 'bbs:plate' plate.id page %}">{{ page }}</a></li>
+                        {% endif %}
+                    {% endfor %}
+                    <li><a href="{% url 'bbs:plate' plate.id next_page %}">下一页</a></li>
+                </ul>
+            </div>
+        {% endif %}
+    </div>
+    <div style="background-color:#6E50E9;border-radius:30px " class="refresh-btn">
+        <a href="{% url 'bbs:plate' plate.id present_page %}">刷新</a>
+    </div>
+
+{% endblock content %}
+</body>
+</html>

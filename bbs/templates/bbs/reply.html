@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="/static/img/bbs_demo_icon.ico"/>
+    <title>发表回复</title>
+    <style>
+         h1{
+      font-family: 'Brush Script MT', cursive;
+      font-size: 50px;
+      border-bottom: 2px dashed;
+      margin-top: 10px;
+  }
+    .to-plate{
+  padding: 10px;
+  color: #fff;
+  border-radius: 30px;
+  text-decoration: none;
+  background: #6E50E9;
+  position: absolute;
+  width: 150px;
+  height: 15px;
+  line-height: 40px;
+  font-size: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: -15px;
+    }
+    .to-plate:hover{
+    background-color: mediumpurple;
+    }
+    </style>
+</head>
+<body>
+{% extends "bbs/base.html" %}
+
+{% block content %}
+    <div class="content-box">
+        <div class="page-head">
+            <h1>reply to {{ article.plate.text }}</h1>
+            <a class="to-plate" href="{% url 'bbs:plate' article.plate.id 1 %}">返回forum {{ article.plate.text }}</a>
+            <a style="margin-left: 200px" class="to-plate" href="{% url 'bbs:article' article.id 1 %}">返回article {{ article.title }}</a>
+        </div>
+        <!--回复输入-->
+        <form style="margin-top: 83px" action="{% url 'bbs:reply' article.id %}" method="post">
+            {% csrf_token %}
+            <div class="reply-box">
+                <div style="border-radius: 5px 5px 0 0 " class="quick-reply-head">
+                        <span>回复 {{ article.title }}</span>
+                    </div>
+                <div class="reply-text">
+                    <label for="id_text">
+                        <textarea style="border-radius:0 0 5px 5px" name="text" id="text"></textarea>
+                    </label>
+                </div>
+                <button class="reply-btn" name="submit">回复</button>
+            </div>
+        </form>
+    </div>
+{% endblock content %}
+</body>
+</html>

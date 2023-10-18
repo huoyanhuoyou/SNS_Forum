@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="/static/img/bbs_demo_icon.ico"/>
+    <title>帖子详情</title>
+    <style>
+         h1{
+      font-family: 'Brush Script MT', cursive;
+      font-size: 50px;
+      border-bottom: 2px dashed;
+      margin-top: 10px;
+  }
+    .to-plate{
+  padding: 10px;
+  color: #fff;
+  border-radius: 30px;
+  text-decoration: none;
+  background: #6E50E9;
+  position: absolute;
+  width: 150px;
+  height: 15px;
+  line-height: 40px;
+  font-size: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: -15px;
+    }
+    .to-plate:hover{
+    background-color: mediumpurple;
+    }
+
+     a.reply-page1{
+    position: relative;
+    top: 30px;
+    left: 6px;
+    width: 150px;
+    height: 15px;
+    color: #fff;
+    text-align: center;
+    text-decoration: none;
+    background-color: #6E50E9;
+    padding: 10px;
+    border-radius: 30px;
+    line-height: 40px;
+    font-size: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: -66px;
+    margin-left: 200px;
+}
+ a.reply-page1:hover{
+    background-color: mediumpurple;
+}
+
+    .article-content1{
+    position: relative;
+    min-height: 0px;
+}
+    .article-content2{
+    position: relative;
+    min-height: 160px;
+}
+.user-info1, .article-text1{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+}
+.user-info1{
+    width: 98px;
+    left: 0;
+    border-top: 1px solid #d8d8d8;
+    border-right: 2px solid #e3e3e3;
+    background-color: #fff;
+    display: flex;
+  justify-content: center;
+}
+.user-info1 p{
+    text-align: center;
+}
+.article-text2{
+    display: inline-flex;
+    position: relative;
+    flex-direction: column;
+    width: 980px;
+    border-top: 1px solid #e3e3e3;
+    background-color: #fff;
+}
+.article-text1{
+    display: inline-flex;
+    position: relative;
+    flex-direction: column;
+    width: 882px;
+    left: 98px;
+    border-top: 1px solid #e3e3e3;
+    background-color: #fff;
+}
+.comment-text{
+    display: inline-flex;
+    position: relative;
+    flex-direction: column;
+    width: 882px;
+    min-height: 160px;
+    left: 98px;
+    border-top: 1px solid #e3e3e3;
+    background-color: #fff;
+}
+.article-text1 span, .comment-text span{
+    padding: 14px 24px 0 24px;
+    margin: 0;
+    background-color: #fff;
+}
+.article-text2 span{
+    padding: 14px 24px 0 24px;
+    margin: 0;
+    background-color: #fff;
+}
+.article-text1 span:first-child, .comment-text span:last-child{
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 4px 0;
+    color: #999;
+}
+.refresh-btn1 a{
+    display: flex;
+    position: fixed;
+    bottom: 72%;
+    right: 2%;
+    width: 150px;
+    color: #fff;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 5px;
+    background-color: #51a970;
+    line-height: 40px;
+    font-size: 16px;
+    justify-content: center;
+    align-items: center;
+}
+.refresh-btn1 a:hover{
+    background-color: #408458;
+}
+    </style>
+</head>
+<body>
+{% extends "bbs/base.html" %}
+
+{% block content %}
+    <div class="content-box">
+        <div class="page-head">
+            <h1>article in {{ article.plate.text }}</h1>
+            <a class="to-plate" href="{% url 'bbs:plate' article.plate.id 1 %}">返回forum {{ article.plate.text }}</a>
+            <br>
+            <a class="reply-page1" href="{% url 'bbs:reply' article.id %}">发表回复 &raquo</a>
+        </div>
+    <br><br><br><br>
+        <!--主贴内容-->
+        <div style="background-color: #f3f3f3;border-radius: 20px" class="article-box">
+            <div style="background-color: darkgrey;margin-left:-98px;width:956px;border-radius: 20px 20px 0 0" class="article-title">
+                <p style="font-size: 24px;margin-left: 0px;padding: 5px 0 -30px -11px">{{ article.title }}</p>
+            </div>
+            {% if present_page == 1 %}
+                <div class="article-content1">
+                    <div class="user-info1">
+                        <p class="username">{{ article.owner.username }}</p>
+                    </div>
+                    <div class="article-text1">
+                        <span>{{ article.date_added|date:'M d, Y H:i' }}</span><br><br>
+                    </div>
+                </div>
+                <div style="border-radius: 0 0 20px 20px " class="article-content2">
+                    <div style="border-radius: 0 0 20px 20px " class="article-text2">
+                        <span style="border-radius: 0 0 20px 20px;white-space: normal;min-height: 160px;word-wrap: break-word">{{ article.text }}</span>
+                    </div>
+                </div>
+            {% endif %}
+        <br>
+        <!--回复内容-->
+        <div class="comment-list" >
+            {% for comment in comments %}
+                <div style="margin-top: 5px;border-radius: 10px" class="comment-content">
+                    <div style="border-radius: 10px 0 0 10px;background-color: darkgrey" class="user-info">
+                        <p class="username">{{ comment.owner.username }}</p>
+                    </div>
+                    <div style="border-radius:0 10px 10px 0" class="comment-text">
+                        <span style="border-radius:0 10px 10px 0;white-space: normal;min-height: 160px;word-wrap: break-word">{{ comment.text }}</span><br/>
+                        <span style="border-radius:0 10px 10px 0;margin-top: 157px">{{ comment.date_added|date:'M d, Y H:i' }}</span>
+                    </div>
+                </div>
+            {% empty %}
+                <p>暂时还没有回复</p>
+            {% endfor %}
+        </div>
+        <!--分页器-->
+        {% if previous_page > 0 %}
+            <div class="turn-page">
+                <ul>
+                    {% if present_page != 1 %}
+                        <li class="previous-page"><a href="{% url 'bbs:article' article.id previous_page %}">上一页</a></li>
+                    {% endif %}
+                    {% for page in page_range %}
+                        {% if page == present_page %}
+                            <li><a class="active" href="{% url 'bbs:article' article.id page %}">{{ page }}</a> </li>
+                        {% else %}
+                            <li><a href="{% url 'bbs:article' article.id page %}">{{ page }}</a></li>
+                        {% endif %}
+                    {% endfor %}
+                    <li><a href="{% url 'bbs:article' article.id next_page %}">下一页</a></li>
+                </ul>
+            </div>
+        {% endif %}
+        <!--快速回复-->
+        <div class="reply-box">
+            {% if user.is_authenticated %}
+                <form action="{% url 'bbs:article' article.id 1 %}" method="post">
+                    {% csrf_token %}
+                    <div style="border-radius: 5px 5px 0 0 " class="quick-reply-head">
+                        <span>快速回复</span>
+                    </div>
+                    <div class="quick-reply-text">
+                        <label for="id_text">
+                            <textarea style="border-radius: 0 0 5px 5px" name="text" id="text"></textarea>
+                        </label>
+                    </div>
+                    <button class="reply-btn" name="submit">回复</button>
+                </form>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="refresh-btn1">
+        <a href="{% url 'bbs:article' article.id present_page %}">刷新</a>
+    </div>
+    </div>
+{% endblock %}
+</body>
+</html>

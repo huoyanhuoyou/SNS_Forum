@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="/static/img/bbs_demo_icon.ico"/>
+    <title>编辑帖子</title>
+    <style>
+    .to-plate{
+  padding: 10px;
+  color: #fff;
+  border-radius: 30px;
+  text-decoration: none;
+  background: #6E50E9;
+  position: absolute;
+  width: 150px;
+  height: 15px;
+  line-height: 40px;
+  font-size: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: -15px;
+    }
+    .to-plate:hover{
+    background-color: mediumpurple;
+    }
+    </style>
+</head>
+<body>
+{% extends "bbs/base.html" %}
+{% block content %}
+    <div class="content-box">
+        <div style="margin-top: 50px" class="page-head">
+            <a class="to-plate" href="{% url 'bbs:plate' article.plate.id 1 %}">返回forum {{ article.plate.text }}</a>
+        </div>
+
+        <form action="{% url 'bbs:edit_article' article.id %}" method="post">
+            {% csrf_token %}
+            <div style="margin-top: -70px" class="post-box">
+                 <div style="border-radius: 5px 5px 0 0 " class="quick-reply-head">
+                        <span>编辑帖子</span>
+                 </div>
+                <div class="post-title">
+                    <label for="id_title">
+                        <input type="text" name="title" id="title" value={{ article.title }} placeholder="标题"/>
+                    </label>
+                </div>
+                <div class="post-text">
+                    <label for="id_text">
+                        <textarea style="border-radius:0 0 5px 5px" name="text" id="text">{{ article.text }}</textarea>
+                    </label>
+                </div>
+                <button class="post-btn" name="submit">提交</button>
+            </div>
+        </form>
+    </div>
+{% endblock content %}
+</body>
+</html>

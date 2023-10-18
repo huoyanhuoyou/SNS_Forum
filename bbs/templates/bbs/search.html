@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="/static/img/bbs_demo_icon.ico"/>
+    <title>查询结果</title>
+    <style>
+        p {
+     font-family: "微软雅黑", serif;
+    font-weight: bold;
+    font-size: 30px;
+}
+       .search-btn{
+  padding: 10px;
+  color: #fff;
+  border-radius: 30px;
+  text-decoration: none;
+  background: #6E50E9;
+  position: absolute;
+  width: 100px;
+  height: 40px;
+  line-height: 40px;
+  font-size: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: -40px;
+  margin-left: 1000px;
+    }
+    .search-btn:hover{
+    background-color: mediumpurple;
+    }
+
+
+input {
+    font-family: "微软雅黑", serif;
+    font-weight: bold;
+        color: #9E9C9C;
+    margin-left:80px;
+    margin-top: 20px;
+}
+
+select, option {
+    font-family: "微软雅黑", serif;
+    font-weight: bold;
+}
+
+::selection {
+  font-family: "微软雅黑", serif;
+    font-weight: bold;
+    background: transparent;
+
+}
+
+::-moz-selection {
+    outline: 2px solid black;
+    background: rgb(241, 241, 241);
+}
+
+    </style>
+</style>
+</head>
+<body>
+{% extends "bbs/base.html" %}
+
+
+{% block content %}
+            <div class="search-box">
+            <form action="{% url 'bbs:search' %}" method="get">
+        <input style="height: 33px;border-radius: 10px;width: 700px;margin-left: 200px;
+            margin-top: 40px;border: 2px solid lightgray "type="text" name="keyword" id="keyword" placeholder="请输入查询关键词"/>
+            <select style="height: 38px;border-radius: 10px;border: 2px solid lightgray" name="condition" id="condition">
+            <option value="content">内容</option>
+            <option value="title">标题</option>
+            <option value="plate">板块</option>
+            <option value="date">时间</option>
+            <option value="owner">发帖用户</option>
+        </select>
+        <button class="search-btn" name="submit">查询</button>
+
+        </form>
+        </div>
+
+    <div class="content-box">
+        {% if articles %}
+            <div class="content-list">
+                {% for article in articles %}
+                    <div style="border-radius:10px;margin: 5px;margin-top: 80px" class="content-card">
+                        <div class="card-head">
+                            <span>{{ article.owner.username }}</span>
+                            <small>{{ article.date_added|date:'M d, Y H:i' }}</small>
+                        </div>
+                        <div class="card-body">
+                            <b><a class="article-link" href="{% url 'bbs:article' article.id 1 %}">{{ article.title }}</a></b>
+                            <span>{{ article }}</span>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            {% if previous_page > 0 %}
+                <div class="turn-page">
+                    <ul>
+                        {% if present_page != 1 %}
+                            <li class="previous-page"><a href="{% url 'bbs:search' %}?keyword={{ keyword }}&condition={{ condition }}&page={{ previous_page }}">上一页</a></li>
+                        {% endif %}
+                        {% for page in page_range %}
+                            {% if page == present_page %}
+                                <li><a class="active" href="{% url 'bbs:search' %}?keyword={{ keyword }}&condition={{ condition }}&page={{ page }}">{{ page }}</a> </li>
+                            {% else %}
+                                <li><a href="{% url 'bbs:search' %}?keyword={{ keyword }}&condition={{ condition }}&page={{ page }}">{{ page }}</a></li>
+                            {% endif %}
+                        {% endfor %}
+                        <li><a href="{% url 'bbs:search' %}?keyword={{ keyword }}&condition={{ condition }}&page={{ next_page }}">下一页</a></li>
+                    </ul>
+                </div>
+            {% endif %}
+        {% else %}
+            <p>没有找到符合条件的帖子</p>
+        {% endif %}
+    </div>
+
+    <div class="refresh-btn">
+        <a href="{% url 'bbs:search' %}?keyword={{ keyword }}&condition={{ condition }}&page={{ present_page }}">刷新</a>
+    </div>
+
+{% endblock content %}
+</body>
+</html>
+

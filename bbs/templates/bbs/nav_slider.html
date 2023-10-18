@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/bbs_style_sheet.css"/>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <script type="text/javascript">
+        var counter=1;
+        setInterval(function () {
+          document.getElementById('radio'+counter).checked=true;
+          counter++;
+          if(counter>4){counter=1;}
+        },5000);
+    </script>
+    <style>
+    body{
+     background-color: #f3f3f3;
+    }
+    s_body{
+    margin: 0;
+    padding: 0;
+    height: 2160px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    }
+    </style>
+</head>
+<body>
+{% if user.is_authenticated %}
+    <ul class="nav">
+        <li><a><b>bbs_demo</b></a></li>
+        <li><a href="{% url 'bbs:index' %}">首页</a> </li>
+            <li style="float: right"><a href="{% url 'users:logout' %}">退出登录</a> </li>
+            <li style="float: right">
+                <div class="dropdown">
+                    <span>{{ user.username }}</span>
+                    <div class="dropdown-content">
+                        <a href="{% url 'bbs:my_article' %}">我的发帖</a>
+                        <a href="{% url 'bbs:my_comment' %}">我的回复</a>
+                    </div>
+                </div>
+            </li>
+        </ul>
+{% else %}
+    <ul class="nav">
+    <li><a><b>bbs_demo</b></a></li>
+    <li><a href="{% url 'bbs:index' %}">首页</a> </li>
+        <li style="float: right"><a href="{% url 'users:register' %}">注册</a> </li>
+        <li style="float: right"><a href="{% url 'users:login' %}">登录</a> </li>
+    </ul>
+    {% endif %}
+<br/>
+</body>
+
+{% block content %}{% endblock content %}
+
+<s_body>
+<div class="slider" style="height: 1200px;">
+     <div class="slides">
+         <input type="radio" name="radio_btn" id="radio1">
+         <input type="radio" name="radio_btn" id="radio2">
+         <input type="radio" name="radio_btn" id="radio3">
+         <input type="radio" name="radio_btn" id="radio4">
+         <div class="slide first">
+             <img src="/static/img/slide1.jpeg" alt="">
+         </div>
+          <div class="slide">
+             <img src="/static/img/slide2.jpeg" alt="">
+         </div>
+         <div class="slide">
+             <img src="/static/img/slide3.jpg" alt="">
+         </div>
+         <div class="slide">
+             <img src="/static/img/slide4.webp" alt="">
+         </div>
+
+         <div class="navigation-auto">
+             <div class="auto-btn1"></div>
+             <div class="auto-btn2"></div>
+             <div class="auto-btn3"></div>
+             <div class="auto-btn4"></div>
+         </div>
+         <div class="navigation-manual">
+             <label for="radio1" class="manual-btn"></label>
+             <label for="radio2" class="manual-btn"></label>
+             <label for="radio3" class="manual-btn"></label>
+             <label for="radio4" class="manual-btn"></label>
+      </div>
+     </div>
+ </div>
+</s_body>
+
+</html>
