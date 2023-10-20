@@ -92,7 +92,7 @@ body {
    </form>
      <br>
     </div>
-    <a href="{% url 'notif:my_info' username=receiver.username %}">返回对方个人信息</a>
+    <a href="{% url 'bbs:user_info' username=receiver.username %}">返回对方个人信息</a>
     <a href="{% url 'notif:my_info' username=request.user.username %}">返回个人信息</a>
     </div>
 <script>
