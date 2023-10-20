@@ -1,0 +1,29 @@
+{% load i18n %}
+
+{% if notifications %}
+    <div class="table-responsive">
+        <table class="table table-condensed table-hover table-striped">
+            <tr>
+                <th class="text-center">{% translate "Timestamp" %}</th>
+                <th class="text-center">{% translate "Title" %}</th>
+                <th class="text-center">{% translate "Action" %}</th>
+            </tr>
+            {% for notif in notifications %}
+                <tr class="{{ notif.level }}">
+                    <td class="text-center">{{ notif.timestamp }}</td>
+                    <td class="text-center">{{ notif.title }}</td>
+                    <td class="text-center">
+                        <a href="{% url 'notif' notif.id %}" class="btn btn-primary" title="View">
+                            <span class="glyphicon glyphicon-eye-open"></span>
+                        </a>
+                        <a href="{% url 'notif:remove_notification' notif.id %}" class="btn btn-danger" title="Remove">
+                            <span class="glyphicon glyphicon-remove"></span>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% else %}
+    <div class="alert alert-default text-center">{% translate "No notifications." %}</div>
+{% endif %}

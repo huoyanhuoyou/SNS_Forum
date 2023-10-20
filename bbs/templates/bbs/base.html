@@ -18,6 +18,7 @@
                 <div class="dropdown-content">
                     <a href="{% url 'bbs:my_article' %}">我的发帖</a>
                     <a href="{% url 'bbs:my_comment' %}">我的回复</a>
+                    <a href="{% url 'notif:my_info' username=user.username %}">个人信息</a>
                 </div>
             </div>
         </li>

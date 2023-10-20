@@ -1,6 +1,6 @@
 from django.urls import path
 from bbs import views
-
+from notif.views import user_info
 
 app_name = 'bbs'
 urlpatterns = [
@@ -28,4 +28,7 @@ urlpatterns = [
     path('comment=<int:comment_id>/delete', views.delete_comment, name='delete_comment'),
     # 查询页面
     path('search/', views.search, name='search'),
+    # 留言页面
+    path('user_info/<str:username>', user_info, name='user_info'),
 ]
+

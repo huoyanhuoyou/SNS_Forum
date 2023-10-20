@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     # 自定义 app
     'bbs',
     'users',
+    'notif',
 
     # 默认添加的 app
     'django.contrib.admin',
@@ -83,7 +84,7 @@ WSGI_APPLICATION = 'bbs_demo.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'my_db',  # 数据库名称
+        'NAME': 'db',  # 数据库名称
         'USER': 'root',        # 数据库用户名
         'PASSWORD': 'root',  # 数据库密码（用单引号或双引号括起来）
         'HOST': 'localhost',   # 数据库主机

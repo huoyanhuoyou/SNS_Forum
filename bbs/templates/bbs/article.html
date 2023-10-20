@@ -165,7 +165,7 @@
             {% if present_page == 1 %}
                 <div class="article-content1">
                     <div class="user-info1">
-                        <p class="username">{{ article.owner.username }}</p>
+                        <a class="username" href={% url 'bbs:user_info' username=article.owner.username %}>{{ article.owner.username }}</a>
                     </div>
                     <div class="article-text1">
                         <span>{{ article.date_added|date:'M d, Y H:i' }}</span><br><br>
@@ -179,12 +179,11 @@
             {% endif %}
         <br>
         <!--回复内容-->
-        <div class="comment-list" >
+        <div class="comment-list" style="clear: both">
             {% for comment in comments %}
                 <div style="margin-top: 5px;border-radius: 10px" class="comment-content">
                     <div style="border-radius: 10px 0 0 10px;background-color: darkgrey" class="user-info">
-                        <p class="username">{{ comment.owner.username }}</p>
-                    </div>
+                        <a class="username"href={% url 'bbs:user_info' username=article.owner.username  %}>{{ comment.owner.username }}</a>                     </div>
                     <div style="border-radius:0 10px 10px 0" class="comment-text">
                         <span style="border-radius:0 10px 10px 0;white-space: normal;min-height: 160px;word-wrap: break-word">{{ comment.text }}</span><br/>
                         <span style="border-radius:0 10px 10px 0;margin-top: 157px">{{ comment.date_added|date:'M d, Y H:i' }}</span>
