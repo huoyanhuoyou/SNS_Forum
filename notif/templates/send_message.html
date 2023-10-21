@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="/static/img/bbs_demo_icon.ico"/>
+    <title>编辑留言</title>
+</head>
+<body>
+{% extends "bbs/base.html" %}
+{% block content %}
+    <h1>Leave a Message</h1>
+
+    {% if messages %}
+        <ul>
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+        <label for="content">Message:</label><br>
+        <textarea name="content" id="content" cols="30" rows="5"></textarea><br>
+        <input type="submit" value="Send Message">
+    </form>
+
+    <a href="{% url 'notif:notiflist' %}">Back to Notifications</a>
+{% endblock content %}
+</body>
+</html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="/static/img/bbs_demo_icon.ico"/>
+    <title>bbs_demo</title>
+    <style>
+      .search-btn{
+  padding: 10px;
+  color: #fff;
+  border-radius: 30px;
+  text-decoration: none;
+  background: #6E50E9;
+  position: absolute;
+  width: 100px;
+  height: 40px;
+  line-height: 40px;
+  font-size: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: -40px;
+  margin-left: 850px;
+    }
+    .search-btn:hover{
+    background-color: mediumpurple;
+    }
+
+input {
+    font-family: "微软雅黑", serif;
+    font-weight: bold;
+        color: #9E9C9C;
+}
+
+select, option {
+
+    font-weight: bold;
+
+}
+
+::selection {
+  font-family: serif;
+    font-weight: bold;
+    background: transparent;
+}
+
+body{overflow: hidden;}
+img {
+  border: 1px solid #ddd;
+  border-radius: 50px;
+  padding: 5px;
+  width: 150px;
+   height: auto;
+  opacity: 1;
+}
+
+img:hover {
+  box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+}
+.container {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 160px;
+  margin:0px;
+  padding:10px;
+}
+
+.center {
+  position: relative;
+  font-size: 20px;
+}
+
+</style>
+
+
+</head>
+<body>
+{% extends "bbs/base.html" %}
+
+{% block content %}
+    <div class="content-box">
+        <div class="search-box">
+        <form action="{% url 'bbs:search' %}" method="get">
+            <input style="height: 33px;border-radius: 10px;width: 700px;margin-left: 50px;
+            margin-top: 40px;border: 2px solid lightgray " type="text" name="keyword" id="keyword" placeholder="请输入查询关键词"/>
+            <select style="height: 38px;border-radius: 10px;border: 2px solid lightgray" name="condition" id="condition">
+                   <option value="content">内容</option>
+                   <option value="title">标题</option>
+                   <option value="plate">板块</option>
+                   <option value="date">时间</option>
+                   <option value="owner">发帖用户</option>
+            </select>
+            <button class="search-btn" name="submit">查询</button>
+        </form>
+        </div>
+        <ul style="margin-top: 50px" class="plate-list">
+        <div class="container">
+            {% for plate in plates %}
+                <li>
+                    <b>
+                        <div class="group">
+                            <a href="{% url 'bbs:plate' plate.id 1 %}">
+                                <img id="myImage" src="/static/img/{{ plate }}.jpg" alt=""
+                                     onerror="this.onerror=null;this.src='/static/img/empty.jpg';this.alt='找不到图片';"
+                                     style="width:150px;height: 150px;">
+                            </a>
+                            <div class="center">{{ plate }}</div>
+                        </div>
+                    </b>
+                </li>
+            {% empty %}
+                <li>暂无版面</li>
+            {% endfor %}
+        </div>
+        </ul>
+    </div>
+{% endblock content %}
+</body>
+</html>

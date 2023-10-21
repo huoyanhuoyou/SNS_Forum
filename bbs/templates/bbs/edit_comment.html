@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="/static/img/bbs_demo_icon.ico"/>
+    <title>编辑回复</title>
+    <style>
+    .plate-page1{
+  padding: 10px;
+  color: #fff;
+  border-radius: 30px;
+  text-decoration: none;
+  background: #6E50E9;
+  position: absolute;
+  width: 150px;
+  height: 15px;
+  line-height: 40px;
+  font-size: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: -15px;
+    }
+    .plate-page1:hover{
+    background-color: mediumpurple;
+    }
+    </style>
+</head>
+<body>
+{% extends "bbs/base.html" %}
+
+{% block content %}
+    <div class="content-box">
+        <div  class="page-head">
+            <a style="margin-top: 35px " class="plate-page1" href="{% url 'bbs:plate' comment.article.plate.id 1 %}">返回forum {{ comment.article.plate.text }}</a>
+        </div>
+        <form action="{% url 'bbs:edit_comment' comment.id %}" method="post">
+            {% csrf_token %}
+            <div style="margin-top: -20px" class="reply-box">
+                <div style="border-radius: 5px 5px 0 0 " class="quick-reply-head">
+                        <span>编辑回复</span>
+                </div>
+                <div class="reply-text">
+                    <label for="id_text">
+                        <textarea style="border-radius:0 0 5px 5px" name="text" id="text">{{ comment.text }}</textarea>
+                    </label>
+                </div>
+                <button class="reply-btn" name="submit">提交</button>
+            </div>
+        </form>
+    </div>
+{% endblock content %}
+</body>
+</html>

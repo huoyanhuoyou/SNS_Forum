@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="/static/img/bbs_demo_icon.ico"/>
+    <title>发表帖子</title>
+    <style>
+         h1{
+      font-family: 'Brush Script MT', cursive;
+      font-size: 50px;
+      border-bottom: 2px dashed;
+      margin-top: 10px;
+  }
+    .to-plate{
+  padding: 10px;
+  color: #fff;
+  border-radius: 30px;
+  text-decoration: none;
+  background: #6E50E9;
+  position: absolute;
+  width: 150px;
+  height: 15px;
+  line-height: 40px;
+  font-size: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: -15px;
+    }
+    .to-plate:hover{
+    background-color: mediumpurple;
+    }
+    </style>
+</head>
+<body>
+{% extends "bbs/base.html" %}
+
+{% block content %}
+    <div class="content-box">
+        <div class="page-head">
+            <h1>forum {{ plate.text }}</h1>
+            <a class="to-plate" href="{% url 'bbs:plate' plate.id 1 %}">返回forum</a>
+        </div>
+        <br><br><br>
+        <!--发帖输入-->
+        <form action="{% url 'bbs:post' plate.id %}" method="post">
+            {% csrf_token %}
+            <div class="post-box">
+                <div class="post-head"><span>发表帖子</span></div>
+                <div class="post-title">
+                    <label for="id_title">
+                        <input type="text" name="title" id="title" placeholder="标题"/>
+                    </label>
+                </div>
+                <div class="post-text">
+                    <label for="id_text">
+                        <textarea name="text" id="text"></textarea>
+                    </label>
+                </div>
+                <button class="post-btn" name="submit">提交</button>
+            </div>
+        </form>
+    </div>
+{% endblock content %}
+</body>
+</html>
