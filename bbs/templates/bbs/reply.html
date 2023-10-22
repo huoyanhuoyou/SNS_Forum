@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <link rel="icon" href="/static/img/bbs_demo_icon.ico"/>
+    <link rel="stylesheet" href="/static/markdown/dist/simplemde.min.css">
+    <script src="/static/markdown/dist/simplemde.min.js"></script>
+    <script src="/static/jQuery.js"></script>
     <title>发表回复</title>
     <style>
          h1{
@@ -30,12 +33,14 @@
     .to-plate:hover{
     background-color: mediumpurple;
     }
+
     </style>
 </head>
 <body>
 {% extends "bbs/base.html" %}
 
 {% block content %}
+
     <div class="content-box">
         <div class="page-head">
             <h1>reply to {{ article.plate.text }}</h1>
@@ -51,13 +56,34 @@
                     </div>
                 <div class="reply-text">
                     <label for="id_text">
-                        <textarea style="border-radius:0 0 5px 5px" name="text" id="text"></textarea>
+
+                        <!-- 修改了id属性和name属性 -->
+                        <textarea style="border-radius:0 0 5px 5px" name="text" id="id_text"></textarea>
+
                     </label>
                 </div>
                 <button class="reply-btn" name="submit">回复</button>
+
             </div>
         </form>
     </div>
+
+
+
+<script>
+    let simplemde;
+    simplemde = new SimpleMDE(
+        {
+            autosave: {
+                "enabled": true,
+                "uniqueId": "MyUniqueID",
+                "delay": 1000,
+            },
+            element: $('textarea[name=text]')[0],
+            spellcheck: false
+        }
+    );
+</script>
 {% endblock content %}
 </body>
 </html>

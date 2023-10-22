@@ -20,5 +20,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('users/', include('users.urls')),
     path('', include('bbs.urls')),
-    path('notif/', include('notif.urls', namespace='notif')),
+    path('chat/', include('chat.urls', namespace='chat')),
 ]

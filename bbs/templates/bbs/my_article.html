@@ -7,7 +7,7 @@
 </head>
 <body>
 {% extends "bbs/base.html" %}
-
+{% load myfileter %}
 {% block content %}
     <div class="content-box">
         <div class="option-tab">
@@ -19,10 +19,10 @@
             {% for article in articles %}
                 <div style="border:2px solid darkgrey;margin-top:5px;border-radius: 10px" class="content-card">
                     <div class="card-head">
-                        <small>{{ article.date_added|date:'M d, Y H:i' }}</small>
+                        <small>{{ article.date_added|date:'M d, Y H:i'|mdToHtml|safe }}</small>
                     </div>
                     <div class="card-body">
-                        <b><a class="article-link" href="{% url 'bbs:article' article.id 1 %}">{{ article.title }}</a></b>
+                        <b><a class="article-link" href="{% url 'bbs:article' article.id 1 %}">{{ article.title|mdToHtml|safe }}</a></b>
                         <span>{{ article }} ...</span><br/>
                     </div>
                     <div class="operate">
@@ -39,6 +39,19 @@
     </div>
 {% endblock content %}
 
-
+<script>
+    let simplemde;
+    simplemde = new SimpleMDE(
+        {
+            autosave: {
+                "enabled": true,
+                "uniqueId": "MyUniqueID",
+                "delay": 1000,
+            },
+            element: $('textarea[name=text]')[0],
+            spellcheck: false
+        }
+    );
+</script>
 </body>
 </html>

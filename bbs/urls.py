@@ -1,6 +1,6 @@
 from django.urls import path
 from bbs import views
-
+from chat.views import user_info
 
 app_name = 'bbs'
 urlpatterns = [
@@ -30,6 +30,8 @@ urlpatterns = [
     path('search/', views.search, name='search'),
     # 开发者邮箱
     path('mailbox/',views.mailbox,name = 'mailbox'),
+    # 留言页面
+    path('user_info/<str:username>', user_info, name='user_info'),
     # 留言板展示
     path('mailboard/',views.mailshow,name = 'mailshow'),
 ]

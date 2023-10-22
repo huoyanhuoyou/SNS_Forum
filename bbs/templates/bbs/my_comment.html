@@ -7,7 +7,7 @@
 </head>
 <body>
 {% extends 'bbs/base.html' %}
-
+{% load myfileter %}
 {% block content %}
     <div class="content-box">
         <div class="option-tab">
@@ -19,12 +19,12 @@
             {% for comment in comments %}
                 <div style="border:2px solid darkgrey;margin-top:5px;border-radius: 10px" class="content-card">
                     <div class="card-head">
-                        <small>{{ comment.date_added|date:'M d, Y H:i' }}</small>
+                        <small>{{ comment.date_added|date:'M d, Y H:i' |mdToHtml|safe}}</small>
                     </div>
                     <div class="card-body">
-                        <b><a class="article-link" href="{% url 'bbs:article' comment.article.id 1 %}">{{ comment.article.title }}</a></b>
+                        <b><a class="article-link" href="{% url 'bbs:article' comment.article.id 1 %}">{{ comment.article.title|mdToHtml|safe }}</a></b>
                         <span>回复: {{ comment.owner }}</span><br/>
-                        <span style="color:black;white-space: normal;min-height: 160px;word-wrap: break-word">  {{ comment.text }}</span>
+                        <span style="color:black;white-space: normal;min-height: 160px;word-wrap: break-word">  {{ comment.text |mdToHtml|safe}}</span>
                     </div>
                     <div class="operate">
                         <a href="{% url 'bbs:edit_comment' comment.id %}">编辑</a>

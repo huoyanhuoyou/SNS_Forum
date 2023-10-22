@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <link rel="icon" href="/static/img/bbs_demo_icon.ico"/>
+    <link rel="stylesheet" href="/static/markdown/dist/simplemde.min.css">
+    <script src="/static/markdown/dist/simplemde.min.js"></script>
+    <script src="/static/jQuery.js"></script>
     <title>帖子详情</title>
     <style>
          h1{
@@ -147,7 +150,7 @@
 </head>
 <body>
 {% extends "bbs/base.html" %}
-
+{% load myfileter %}
 {% block content %}
     <div class="content-box">
         <div class="page-head">
@@ -160,34 +163,33 @@
         <!--主贴内容-->
         <div style="background-color: #f3f3f3;border-radius: 20px" class="article-box">
             <div style="background-color: darkgrey;margin-left:-98px;width:956px;border-radius: 20px 20px 0 0" class="article-title">
-                <p style="font-size: 24px;margin-left: 0px;padding: 5px 0 -30px -11px">{{ article.title }}</p>
+                <p style="font-size: 24px;margin-left: 0px;padding: 5px 0 -30px -11px">{{ article.title|mdToHtml|safe }}</p>
             </div>
             {% if present_page == 1 %}
                 <div class="article-content1">
                     <div class="user-info1">
-                        <p class="username">{{ article.owner.username }}</p>
+                        <a class="username" href={% url 'bbs:user_info' username=article.owner.username %}>{{ article.owner.username }}</a>
                     </div>
                     <div class="article-text1">
-                        <span>{{ article.date_added|date:'M d, Y H:i' }}</span><br><br>
+                        <span>{{ article.date_added|date:'M d, Y H:i' |mdToHtml|safe}}</span><br><br>
                     </div>
                 </div>
                 <div style="border-radius: 0 0 20px 20px " class="article-content2">
                     <div style="border-radius: 0 0 20px 20px " class="article-text2">
-                        <span style="border-radius: 0 0 20px 20px;white-space: normal;min-height: 160px;word-wrap: break-word">{{ article.text }}</span>
+                        <span style="border-radius: 0 0 20px 20px;white-space: normal;min-height: 160px;word-wrap: break-word">{{ article.text|mdToHtml|safe }}</span>
                     </div>
                 </div>
             {% endif %}
         <br>
         <!--回复内容-->
-        <div class="comment-list" >
+        <div class="comment-list" style="clear: both">
             {% for comment in comments %}
                 <div style="margin-top: 5px;border-radius: 10px" class="comment-content">
                     <div style="border-radius: 10px 0 0 10px;background-color: darkgrey" class="user-info">
-                        <p class="username">{{ comment.owner.username }}</p>
-                    </div>
+                        <a class="username" href={% url 'bbs:user_info' username=article.owner.username  %}>{{ comment.owner.username }}</a>                     </div>
                     <div style="border-radius:0 10px 10px 0" class="comment-text">
-                        <span style="border-radius:0 10px 10px 0;white-space: normal;min-height: 160px;word-wrap: break-word">{{ comment.text }}</span><br/>
-                        <span style="border-radius:0 10px 10px 0;margin-top: 157px">{{ comment.date_added|date:'M d, Y H:i' }}</span>
+                        <span style="border-radius:0 10px 10px 0;white-space: normal;min-height: 160px;word-wrap: break-word">{{ comment.text|mdToHtml|safe }}</span><br/>
+                        <span style="border-radius:0 10px 10px 0;margin-top: 157px">{{ comment.date_added|date:'M d, Y H:i'|mdToHtml|safe }}</span>
                     </div>
                 </div>
             {% empty %}
@@ -235,6 +237,22 @@
         <a href="{% url 'bbs:article' article.id present_page %}">刷新</a>
     </div>
     </div>
+
+    <script>
+    let simplemde;
+    simplemde = new SimpleMDE(
+        {
+            autosave: {
+                "enabled": true,
+                "uniqueId": "MyUniqueID",
+                "delay": 1000,
+            },
+            element: $('textarea[name=text]')[0],
+            spellcheck: false
+        }
+    );
+</script>
+
 {% endblock %}
 </body>
 </html>

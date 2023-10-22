@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <link rel="icon" href="/static/img/bbs_demo_icon.ico"/>
+    <link rel="stylesheet" href="/static/markdown/dist/simplemde.min.css">
+    <script src="/static/markdown/dist/simplemde.min.js"></script>
+    <script src="/static/jQuery.js"></script>
     <title>编辑帖子</title>
     <style>
     .to-plate{
@@ -54,6 +57,21 @@
             </div>
         </form>
     </div>
+    <script>
+    let simplemde;
+    simplemde = new SimpleMDE(
+        {
+            autosave: {
+                "enabled": true,
+                "uniqueId": "MyUniqueID",
+                "delay": 1000,
+            },
+            element: $('textarea[name=text]')[0],
+            spellcheck: false
+        }
+    );
+</script>
 {% endblock content %}
 </body>
+
 </html>
