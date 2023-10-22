@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.conf import settings
-
+from django.utils import timezone
 # Create your models here.
 class Plate(models.Model):
     """板块"""
@@ -38,3 +38,12 @@ class Comment(models.Model):
 
     def __str__(self):
         return f'{self.text[:50]}...'
+
+class Message(models.Model):
+    name = models.CharField(max_length=100, null =True)
+    email = models.EmailField(null=True)
+    timestamp = models.DateTimeField(default = timezone.now)
+    content = models.TextField()
+
+    def __str__(self):
+        return f'{self.name}({self.email})-{self.timestamp}'

@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="/static/img/bbs_demo_icon.ico"/>
+    <title>开发者信箱</title>
+    <style>
+        .to-plate {
+            padding: 10px;
+            color: #fff;
+            border-radius: 30px;
+            text-decoration: none;
+            background: #6E50E9;
+            position: absolute;
+            width: 150px;
+            height: 15px;
+            line-height: 40px;
+            font-size: 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: -15px;
+        }
+
+        .to-plate:hover {
+            background-color: mediumpurple;
+        }
+
+
+
+        .developer-email {
+  background-color: #f2f2f2;
+  border: 1px solid #ccc;
+  padding: 10px;
+  width: 300px;
+}
+
+.email-label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.email-address {
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+}
+
+/* style.css */
+
+/* 设置留言板容器的背景颜色和边距 */
+.mailboard-container {
+  background-color: #f2f2f2;
+  padding: 20px;
+}
+
+/* 设置留言的样式 */
+.message {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+/* 设置留言者姓名和电子邮件的样式 */
+.message .name {
+  font-weight: bold;
+}
+
+.message .email {
+  color: #666;
+}
+
+/* 设置留言内容的样式 */
+.message .content {
+  margin-top: 5px;
+}
+.message .time{
+    margin-top: 3px;
+}
+/* Basic Grey */
+
+.basic-grey {
+
+    margin-left:auto;
+
+         margin-right:auto;
+
+         max-width: 500px;
+
+         background: #F7F7F7;
+
+         padding: 25px 15px 25px 10px;
+
+         font: 12px Georgia, "Times New Roman", Times, serif;
+
+         color: #888;
+
+         text-shadow: 1px 1px 1px #FFF;
+
+         border:1px solid #E4E4E4;
+
+}
+
+.basic-grey h1 {
+
+         font-size: 25px;
+
+         padding: 0px 0px 10px 40px;
+
+         display: block;
+
+         border-bottom:1px solid #E4E4E4;
+
+         margin: -10px -15px 30px -10px;;
+
+         color: #888;
+
+}
+
+.basic-grey h1>span {
+
+         display: block;
+
+         font-size: 11px;
+
+}
+
+.basic-grey label {
+
+         display: block;
+
+         margin: 0px;
+
+}
+
+.basic-grey label>span {
+
+         float: left;
+
+         width: 20%;
+
+         text-align: right;
+
+         padding-right: 10px;
+
+         margin-top: 10px;
+
+         color: #888;
+
+}
+
+.basic-grey input[type="text"], .basic-grey input[type="email"], .basic-grey textarea, .basic-grey select {
+
+         border: 1px solid #DADADA;
+
+         color: #888;
+
+         height: 30px;
+
+         margin-bottom: 16px;
+
+         margin-right: 6px;
+
+         margin-top: 2px;
+
+         outline: 0 none;
+
+         padding: 3px 3px 3px 5px;
+
+         width: 70%;
+
+         font-size: 12px;
+
+         line-height:15px;
+
+         box-shadow: inset 0px 1px 4px #ECECEC;
+
+         -moz-box-shadow: inset 0px 1px 4px #ECECEC;
+
+         -webkit-box-shadow: inset 0px 1px 4px #ECECEC;
+
+}
+
+.basic-grey textarea{
+
+         padding: 5px 3px 3px 5px;
+
+}
+
+.basic-grey select {
+
+         background: #FFF url('down-arrow.png') no-repeat right;
+
+         background: #FFF url('down-arrow.png') no-repeat right);
+
+         appearance:none;
+
+         -webkit-appearance:none;
+
+         -moz-appearance: none;
+
+         text-indent: 0.01px;
+
+         text-overflow: '';
+
+         width: 70%;
+
+         height: 35px;
+
+         line-height: 25px;
+
+}
+
+.basic-grey textarea{
+
+         height:100px;
+
+}
+
+.basic-grey .button {
+
+         background: #E27575;
+
+         border: none;
+
+         padding: 10px 25px 10px 25px;
+
+         color: #FFF;
+
+         box-shadow: 1px 1px 5px #B6B6B6;
+
+         border-radius: 3px;
+
+         text-shadow: 1px 1px 1px #9E3F3F;
+
+         cursor: pointer;
+
+}
+
+.basic-grey .button:hover {
+
+         background: #CF7A7A
+
+}
+
+.elegant-aero {
+
+    margin-left:auto;
+
+         margin-right:auto;
+
+         max-width: 500px;
+
+         background: #D2E9FF;
+
+         padding: 20px 20px 20px 20px;
+
+         font: 12px Arial, Helvetica, sans-serif;
+
+         color: #666;
+
+}
+
+.elegant-aero h1 {
+
+         font: 24px "Trebuchet MS", Arial, Helvetica, sans-serif;
+
+         padding: 10px 10px 10px 20px;
+
+         display: block;
+
+         background: #C0E1FF;
+
+         border-bottom: 1px solid #B8DDFF;
+
+         margin: -20px -20px 15px;
+
+}
+
+.elegant-aero h1>span {
+
+         display: block;
+
+         font-size: 11px;
+
+}
+
+
+
+.elegant-aero label>span {
+
+         float: left;
+
+         margin-top: 10px;
+
+         color: #5E5E5E;
+
+}
+
+.elegant-aero label {
+
+         display: block;
+
+         margin: 0px 0px 5px;
+
+}
+
+.elegant-aero label>span {
+
+         float: left;
+
+         width: 20%;
+
+         text-align: right;
+
+         padding-right: 15px;
+
+         margin-top: 10px;
+
+         font-weight: bold;
+
+}
+
+.elegant-aero input[type="text"], .elegant-aero input[type="email"], .elegant-aero textarea, .elegant-aero select {
+
+         color: #888;
+
+         width: 70%;
+
+         padding: 0px 0px 0px 5px;
+
+         border: 1px solid #C5E2FF;
+
+         background: #FBFBFB;
+
+         outline: 0;
+
+         -webkit-box-shadow:inset 0px 1px 6px #ECF3F5;
+
+         box-shadow: inset 0px 1px 6px #ECF3F5;
+
+         font: 200 12px/25px Arial, Helvetica, sans-serif;
+
+         height: 30px;
+
+         line-height:15px;
+
+         margin: 2px 6px 16px 0px;
+
+}
+
+.elegant-aero textarea{
+
+         height:100px;
+
+         padding: 5px 0px 0px 5px;
+
+         width: 70%;
+
+}
+
+.elegant-aero select {
+
+         background: #fbfbfb url('down-arrow.png') no-repeat right;
+
+         background: #fbfbfb url('down-arrow.png') no-repeat right;
+
+         appearance:none;
+
+         -webkit-appearance:none;
+
+         -moz-appearance: none;
+
+         text-indent: 0.01px;
+
+         text-overflow: '';
+
+         width: 70%;
+
+}
+
+.elegant-aero .button{
+
+         padding: 10px 30px 10px 30px;
+
+         background: #66C1E4;
+
+         border: none;
+
+         color: #FFF;
+
+         box-shadow: 1px 1px 1px #4C6E91;
+
+         -webkit-box-shadow: 1px 1px 1px #4C6E91;
+
+         -moz-box-shadow: 1px 1px 1px #4C6E91;
+
+         text-shadow: 1px 1px 1px #5079A3;
+
+
+
+}
+
+.elegant-aero .button:hover{
+
+         background: #3EB1DD;
+
+}
+
+    </style>
+</head>
+<body>
+{% extends "bbs/base.html" %}
+{% block content %}
+     <form action="{% url 'bbs:mailshow' %}" method="post" class="elegant-aero">
+            {% csrf_token %}
+                 <h1>Contact Form
+
+                          <span>Please fill all the texts in the fields.</span>
+
+                 </h1>
+
+                 <label>
+
+                          <span>Themplate :</span>
+
+                          <select id="template" name="themplate" onchange="changeStyle();">
+
+                                   <option value="basic-grey">basic-grey</option>
+
+                                   <option value="elegant-aero">elegant-aero</option>
+
+                                   <option value="smart-green">smart-green</option>
+
+                                   <option value="white-pink">white-pink</option>
+
+                                   <option value="bootstrap-frm">bootstrap-frm</option>
+
+                                   <option value="dark-matter">dark-matter</option>
+
+                          </select>
+
+                 </label>
+
+                 <label>
+
+                          <span>Your Name :</span>
+
+                          <input id="name" type="text" name="name" placeholder="Your Full Name" required=""/>
+
+                 </label>
+
+                 <label>
+
+                          <span>Your Email :</span>
+
+                          <input id="email" type="email" name="email" placeholder="Valid Email Address" required=""/>
+
+                 </label>
+
+
+
+                 <label>
+
+                          <span>Message :</span>
+
+                          <textarea id="content" name="content" placeholder="Your Message to Us" required=""></textarea>
+
+                 </label>
+
+                 <label>
+
+                          <span>Subject :</span><select name="selection">
+
+                                   <option value="Job Inquiry">Job Inquiry</option>
+
+                                   <option value="General Question">General Question</option>
+
+                          </select>
+
+                 </label>
+
+                 <label>
+
+                          <span>&nbsp;</span>
+
+                          <button type="submit">Send</button>
+
+                 </label>
+
+         </form>
+        <div class="mailboard-container">
+        <h2>Messages:</h2>
+        <ul>
+        {% for message in messages %}
+            <li>
+                <div class="message.name">
+                    <p>{{ message.name }} ({{ message.email }})</p>
+                </div>
+                <div class="message.content">
+                    <p>{{ message.content }}</p>
+                </div>
+                <div class="message.time">
+                    <p>{{ message.timestamp }}</p>
+                </div>
+            </li>
+        {% empty %}
+            <div>
+                <li>No messages yet.</li>
+            </div>
+
+        {% endfor %}
+        </ul>
+        </div>
+    <div class="developer-email">
+        <p class="email-label">开发人员邮箱: </p>
+        <p class="email-address">zhengxieyu@sjtu.edu.cn</p>
+        <p class="email-address">qwer1234@sjtu.edu.cn</p>
+        <p class="email-address">aquatarkus@sjtu.edu.cn</p>
+        <p class="email-address">aquatarkus@sjtu.edu.cn</p>
+        <p class="email-address">zhulinxue@sjtu.edu.cn</p>
+        <p class="email-address">Developer Group:</p>
+    </div>
+        <img src="/static/img/developer_group_image.jpg" alt="Developer Group">
+
+        <script>
+
+                 function changeStyle() {
+
+            var template = document.getElementById("template");
+
+            var index = template.selectedIndex;
+
+            var templatevalue = template.options[index].value;
+
+            var templatecss = document.getElementById("templatecss");
+
+            templatecss.setAttribute("href","css/" + templatevalue + ".css");
+
+            document.getElementsByTagName("form")[0].setAttribute("class",templatevalue);
+
+          }
+
+         </script>
+
+
+{% endblock content %}
+</body>
+</html>

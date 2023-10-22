@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect
-from bbs.models import Plate, Article, Comment
+from bbs.models import Plate, Article, Comment,Message
 from bbs.forms import ArticleForm, CommentForm
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
-
+from django.views.decorators.csrf import csrf_exempt
 # Create your views here.
 def index(request):
     """bbs主页"""
@@ -218,6 +218,7 @@ def edit_comment(request, comment_id):
     if comment.owner != request.user:
         raise Http404
 
+
     if request.method != 'POST':
         form = CommentForm(instance=comment)
     else:
@@ -340,3 +341,19 @@ def search(request):
     }
     return render(request, 'bbs/search.html', context)
 
+def mailbox(request):
+
+    return render(request, 'bbs/mailbox.html')
+
+@csrf_exempt
+def mailshow(request):
+    messages = Message.objects.all()
+    if request.method == 'POST':
+        name = request.POST['name']
+        email = request.POST['email']
+        content = request.POST['content']
+        message = Message(content=content, name = name,email=email)
+        message.save()
+        return render(request, 'bbs/mailbox.html', {'messages': messages})
+
+    return render(request, 'bbs/mailbox.html', {'messages': messages})
