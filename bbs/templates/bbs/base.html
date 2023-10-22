@@ -4,8 +4,12 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" type="text/css" href="/static/css/bbs_style_sheet.css"/>
+
+
+
 </head>
 <body>
+
 <ul class="nav">
     <li><a><b>SJTUer‘s SNS Forum</b></a></li>
     <li><a href="{% url 'bbs:index' %}">首页</a> </li>
@@ -18,9 +22,30 @@
                 <div class="dropdown-content">
                     <a href="{% url 'bbs:my_article' %}">我的发帖</a>
                     <a href="{% url 'bbs:my_comment' %}">我的回复</a>
-                    <a href="{% url 'notif:my_info' username=user.username %}">个人信息</a>
                 </div>
             </div>
+        </li>
+        <li style="float: right">
+        <div class="dropdown">
+                <span>{{ "论坛之外" }}</span>
+                <div class="dropdown-content">
+                    <!-- 首先确定导航栏中的内容 每个内容用链接标签<a>表示 -->
+                    <a href="https://i.sjtu.edu.cn/">交大信息服务网</a>
+                    <a href="https://oc.sjtu.edu.cn/">canvas登录</a>
+                    <a href="https://shuiyuan.sjtu.edu.cn/">交大水源</a>
+                    <a href="https://mail.sjtu.edu.cn/">交大邮箱</a>
+                    <a href="https://pt.sjtu.edu.cn/">交大葡萄</a>
+                    <a href="https://my.sjtu.edu.cn/">交我半</a>
+                    <a href="https://www.overleaf.com/">overleaf</a>
+                    <a href="https://www.zhihu.com/">知乎</a>
+                    <a href="https://www.bilibili.com/">B站</a>
+                    <a href="https://github.com/">github</a>
+                    <a href="https://dekt.sjtu.edu.cn/">第二课堂</a>
+                    <a href="http://studyroom.lib.sjtu.edu.cn/">图书馆预约</a>
+                    <a href="{% url 'bbs:mailbox' %}">开发人员信箱</a>
+                </div>
+            </div>
+
         </li>
         <li style="float: right">
         {% if user.avatar %}
