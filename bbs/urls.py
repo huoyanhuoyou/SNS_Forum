@@ -1,6 +1,7 @@
 from django.urls import path
 from bbs import views
 from chat.views import user_info
+from notif.views import leave_message
 
 app_name = 'bbs'
 urlpatterns = [
@@ -34,4 +35,6 @@ urlpatterns = [
     path('user_info/<str:username>', user_info, name='user_info'),
     # 留言板展示
     path('mailboard/',views.mailshow,name = 'mailshow'),
+    # 留言页面
+    path('notif/leave_message/<str:receiver_username>', leave_message, name='leavemes'),
 ]
