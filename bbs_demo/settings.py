@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'bbs',
     'users',
     'chat',
+    'notif',
 
     # 默认添加的 app
     'django.contrib.admin',
@@ -84,9 +85,9 @@ WSGI_APPLICATION = 'bbs_demo.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'my_db',  # 数据库名称
+        'NAME': 'db',  # 数据库名称
         'USER': 'root',        # 数据库用户名
-        'PASSWORD': 'root',  # 数据库密码（用单引号或双引号括起来）
+        'PASSWORD': 'bibibibi2219',  # 数据库密码（用单引号或双引号括起来）
         'HOST': 'localhost',   # 数据库主机
         'PORT': '3306',        # 数据库端口（作为字符串）
     }
@@ -154,7 +155,7 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 
-#邮件相关配置
+# 邮件相关配置
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'# 发送邮件配置
 EMAIL_HOST = 'smtp.qq.com'# 服务器名称
 EMAIL_PORT = 465# 服务端口

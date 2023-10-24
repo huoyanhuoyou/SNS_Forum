@@ -21,4 +21,5 @@ urlpatterns = [
     path('users/', include('users.urls')),
     path('', include('bbs.urls')),
     path('chat/', include('chat.urls', namespace='chat')),
+    path('notif/', include('notif.urls')),
 ]
