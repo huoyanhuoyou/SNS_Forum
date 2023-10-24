@@ -1,10 +1,14 @@
 from django.urls import path, include
 from notif import views
+from django.urls import re_path
 
 app_name = 'notif'
 urlpatterns = [
-    # 私信发送页面
-    path('chat_message/sender:<str:sendername>/receiver:<str:receivername>', views.chat_message, name='chat_message'),
-    # 个人信息页面
-    path('my_info/<str:username>', views.my_info, name='my_info'),
+    path('notifview/<int:notif_id>/', views.notification_view, name='notifview'),
+    path('notif/', views.notification_list, name='notiflist'),
+    path('notifrm/<int:notif_id>/', views.remove_notification, name='notifrm'),
+    path('mark_all_read/', views.mark_all_read, name='notifmar'),
+    path('delete_all_read/', views.delete_all_read, name='notifdar'),
+    path('user_notifications_count/', views.user_notifications_count, name='notifcount'),
+    path('leave_message/', views.leave_message, name='leavemes'),
 ]

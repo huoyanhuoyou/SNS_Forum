@@ -4,81 +4,28 @@
     <meta charset="UTF-8">
     <link rel="icon" href="/static/img/bbs_demo_icon.ico"/>
     <title>编辑留言</title>
-        <style>
-       /* 设置基本样式 */
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-}
-
-.chat-container {
-    max-width: 500px;
-    margin: 20px auto;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    overflow: hidden;
-}
-
-.chat-display {
-    padding: 10px;
-    background-color: #f9f9f9;
-    height: 300px;
-    overflow-y: scroll;
-}
-
-.chat-input {
-    display: flex;
-    align-items: center;
-    padding: 10px;
-    background-color: #f5f5f5;
-}
-
-.chat-input input {
-    flex-grow: 1;
-    margin-right: 10px;
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-.chat-input button {
-    padding: 5px 10px;
-    background-color: #428bca;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-    </style>
 </head>
 <body>
 {% extends "bbs/base.html" %}
 {% block content %}
-    <h1>Leave a Message</h1>
-    <div class="chat-container">
-        <div class="chat-display">
-            <!-- 对话展示框将在这里 -->
-            {% if messages %}
-            <ul>
-            {% for message in messages %}
-                <li>{{ message }}</li>
-            {% endfor %}
-            </ul>
-            {% endif %}
-        </div>
-        <div class="chat-input">
-        <form method="post">
-             {% csrf_token %}
-             <label for="content">Message:</label><br>
-             <textarea name="content" id="content" cols="50" rows="1" placeholder="请输入内容"></textarea>
-             <input style="margin-top: 5px" type="submit" value="Send Message">
-        </form>
-       </div>
-    </div>
+    <h1>留言</h1>
 
-    <a href="{% url 'notif:notiflist' %}">Back to Notifications</a>
+    {% if messages %}
+        <ul>
+            {% for message in messages %}
+                <li>{{ 留言 }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+        <label for="content">消息内容:</label><br>
+        <textarea name="content" id="content" cols="30" rows="5"></textarea><br>
+        <input type="submit" value="发送">
+    </form>
+
+    <a href="{% url 'notif:notiflist' %}">查看消息列表</a>
 {% endblock content %}
 </body>
 </html>

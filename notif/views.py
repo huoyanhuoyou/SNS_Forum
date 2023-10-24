@@ -1,128 +1,131 @@
 import logging
+
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
-from users.models import CustomUser
+from django.utils.translation import gettext_lazy as _
+from django.contrib.auth import get_user_model
+from .models import Notification
+from django.db.models import Q
+from django.conf import settings
+
+
 logger = logging.getLogger(__name__)
-from channels.layers import get_channel_layer
-from asgiref.sync import async_to_sync
-from bs4 import BeautifulSoup
-from .models import Message
-from django.shortcuts import render
-from django.urls import reverse
+User = get_user_model()
 
-def chat_message(request,sendername,receivername):
-    sender = CustomUser.objects.get(username=sendername)  # 获取当前登录用户作为发送者
-    recipient = CustomUser.objects.get(username=receivername)  # 设置接收者
-    if request.method == 'POST':
-        message_text = request.POST.get('message', '')  # 获取提交的消息内容
-        if message_text:
-            message = Message.objects.create(sender=sender, recipient=recipient, message=message_text)
-            message.save()  # 保存消息到数据库
-    sender_list = Message.objects.filter(sender=sender, recipient=recipient)
-    receiver_list = Message.objects.filter(sender=recipient, recipient=sender)
-    messages_list = sender_list.union(receiver_list)
-    messages_list = sorted(messages_list, key=lambda x: x.create_time)
-    messages = {
-        'sender': sender,
-        'receiver': recipient,
-        'messages': messages_list
-    }
-    return render(request, 'chat.html', messages)
-
-
-
-def my_info(request, username):
-    try:
-        user = CustomUser.objects.get(username=username)
-    except CustomUser.DoesNotExist:
-        # 处理用户不存在的情况，例如返回错误页面或重定向到其他地方
-        pass
-    Sender_info={
-        'username':request.user.username
-    }
-    CustomUser_info = {
-        'username': user.username,
-        'email': user.email,
-        'phone':user.phone,
-        'Sno':user.Sno,
-        'Imag':user.avatar
-        # 添加其他需要的字段
-    }
-
-    sender_list = Message.objects.filter(recipient=user)
-    sender_messages = []
-    for message in sender_list:
-        if message.sender.username not in [msg.sender.username for msg in sender_messages]:
-            sender_messages.append(message)
-
+@login_required
+def notification_list(request):
+    logger.debug("notification_list called by user %s" % request.user)
+    #notifications_qs = Notification.objects.filter(user=request.user).order_by("-timestamp")
+    notifications_qs = Notification.objects.filter(Q(sender=request.user) | Q(user=request.user)).order_by("-timestamp")
+    new_notifs = notifications_qs.filter(viewed=False)
+    old_notifs = notifications_qs.filter(viewed=True)
+    logger.debug(
+        "User %s has %s unread and %s read notifications",
+        request.user,
+        len(new_notifs),
+        len(old_notifs)
+    )
     context = {
-        'Sender_info':Sender_info,
-        'CustomUser_info': CustomUser_info,
-        'sender_messages': sender_messages
+        'read': old_notifs,
+        'unread': new_notifs,
     }
-
-    return render(request, 'my_info.html', context)
-
-def user_info(request, username):
-    try:
-        user = CustomUser.objects.get(username=username)
-    except CustomUser.DoesNotExist:
-        # 处理用户不存在的情况，例如返回错误页面或重定向到其他地方
-        pass
-    Sender_info={
-        'username':request.user.username
-    }
-    CustomUser_info = {
-        'username': user.username,
-        'email': user.email,
-        'phone':user.phone,
-        'Sno':user.Sno,
-        'Imag':user.avatar
-        # 添加其他需要的字段
-    }
-
-    sender_list = Message.objects.filter(recipient=user)
-    sender_messages = []
-    for message in sender_list:
-        sender_messages.append(message)
-
+    return render(request, 'list.html', context)
+    new_notifs = notifications_qs.filter(viewed=False)
+    old_notifs = notifications_qs.filter(viewed=True)
+    logger.debug(
+        "User %s has %s unread and %s read notifications",
+        request.user,
+        len(new_notifs),
+        len(old_notifs)
+    )
     context = {
-        'Sender_info':Sender_info,
-        'CustomUser_info': CustomUser_info,
-        'sender_messages': sender_messages
+        'read': old_notifs,
+        'unread': new_notifs,
     }
+    return render(request, 'list.html', context)
 
-    return render(request, 'others_info.html', context)
 
-def post(self, request, to_user):
-    if self.request.user.is_authenticated:
-        username = self.request.user.username
-        if str(username) == str(to_user):
-            return redirect(reverse('main'))
-        users_img_path = CustomUser.objects.filter(username=username).values('image')[0].get('image')
-        message = BeautifulSoup(request.POST.get('message', ''), 'html.parser').get_text()
-        if not message:
-            return redirect(reverse('chats', args=(to_user,)))
-        sender_id = CustomUser.objects.filter(username=username).values()[0].get('id')
-        to_user_id = CustomUser.objects.filter(username=to_user).values()[0].get('id')
-        to_users_img_path = CustomUser.objects.filter(username=to_user).values('image')
-        if to_users_img_path:
-            to_users_img_path = to_users_img_path[0].get('image')
-        else:
-
-            return redirect(reverse('main'))
-        ms = Message.objects.create(sender_id=sender_id, recipient_id=to_user_id, message=message)
-        # 以接收者为组名
-        group_name = to_user
-        # 获取当前频道
-        channel_layer = get_channel_layer()
-        async_to_sync(channel_layer.group_send)(
-            group_name, {
-                'type': 'receive',
-                'message': message,
-                'recipient': to_user,
-                'create_time': str(ms.create_time),
-                'sender': username,
-                'to_users_img_path': to_users_img_path
-
-            }
+@login_required
+def notification_view(request, notif_id):
+    logger.debug(
+        "notification_view called by user %s for notif_id %s",
+        request.user,
+        notif_id
+    )
+    notif = get_object_or_404(Notification, pk=notif_id)
+    if notif.user == request.user:
+        logger.debug("Providing notification for user %s", request.user)
+        context = {'notif': notif}
+        notif.mark_viewed()
+        return render(request, 'view.html', context)
+    else:
+        logger.warning(
+            "User %s not authorized to view notif_id %s belonging to user %s",
+            request.user,
+            notif_id, notif.user
         )
+        messages.error(request, _('You are not authorized to view that notification.'))
+        return redirect('notif:notiflist')
+
+
+@login_required
+def remove_notification(request, notif_id):
+    logger.debug(
+        "remove notification called by user %s for notif_id %s",
+        request.user,
+        notif_id
+    )
+    notif = get_object_or_404(Notification, pk=notif_id)
+    if notif.user == request.user:
+        if Notification.objects.filter(id=notif_id).exists():
+            notif.delete()
+            logger.info("Deleting notif id %s by user %s", notif_id, request.user)
+            messages.success(request, _('Deleted notification.'))
+    else:
+        logger.error(
+            "Unable to delete notif id %s for user %s - notif matching id not found.",
+            notif_id,
+            request.user
+        )
+        messages.error(request, _('Failed to locate notification.'))
+    return redirect('notif:notiflist')
+
+
+@login_required
+def mark_all_read(request):
+    logger.debug('mark all notifications read called by user %s', request.user)
+    Notification.objects.filter(user=request.user).update(viewed=True)
+    messages.success(request, _('Marked all notifications as read.'))
+    return redirect('notif:notiflist')
+
+
+@login_required
+def delete_all_read(request):
+    logger.debug('delete all read notifications called by user %s', request.user)
+    Notification.objects.filter(user=request.user).filter(viewed=True).delete()
+    messages.success(request, _('Deleted all read notifications.'))
+    return redirect('notif:notiflist')
+
+
+def user_notifications_count(request, user_pk: int):
+    """returns to notifications count for the give user as JSON
+
+    This view is public and does not require login
+    """
+    unread_count = Notification.objects.user_unread_count(user_pk)
+    data = {'unread_count': unread_count}
+    return JsonResponse(data, safe=False)
+
+@login_required
+def leave_message(request, receiver_username):
+    if request.method == 'POST':
+        user = User.objects.get(username=receiver_username)
+        content = request.POST.get('content')
+        imessage = Notification(sender=request.user, user=user, mes=content)
+        imessage.save()
+        messages.success(request, 'Message sent successfully.')
+        return redirect('notif:notiflist')
+    else:
+        return render(request, 'send_message.html')  # Create a template for sending messages
