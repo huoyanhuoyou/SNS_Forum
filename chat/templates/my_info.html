@@ -55,10 +55,10 @@
 
     <div>
     <h2>个人信息:</h2>
-    <p>Username: {{ CustomUser_info.username }}</p>
-    <p>Email: {{ CustomUser_info.email }}</p>
-    <p>Sno: {{ CustomUser_info.Sno }}</p>
-    <p>Phone: {{ CustomUser_info.phone }}</p>
+    <p>Username: {{ CustomUser_info.username }}</p><a href="{% url 'users:update_name' %}">修改</a>
+    <p>Email: {{ CustomUser_info.email }}</p><a href="{% url 'users:update_email' %}">修改</a>
+    <p>Sno: {{ CustomUser_info.Sno }}</p><a href="{% url 'users:update_sno' %}">修改</a>
+    <p>Phone: {{ CustomUser_info.phone }}</p><a href="{% url 'users:update_phone' %}">修改</a>
     <img src="{{ CustomUser_info.avatar.url }}"></img>
     <!-- 添加其他字段的显示 -->
     </div>

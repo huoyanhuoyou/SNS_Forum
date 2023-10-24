@@ -30,6 +30,30 @@
     .back-button:hover{
     background-color: mediumpurple;
     }
+    .second-button{
+  padding: 14px 16px;
+  color: #fff;
+  border: none;
+  border-radius: 30px;
+  text-decoration: none;
+  background: #d300ff;
+  position: absolute;
+  width: 80px;
+  height: 20px;
+  text-align: center;
+  line-height: 40px;
+  font-size: 16px;
+  top: 160px;
+  margin-left: 300px;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.second-button:hover{
+  background-color: #e684ff;
+}
     </style>
     <script>
     var messageList = document.getElementById('message-list');
@@ -54,6 +78,9 @@
     {% block content %}
     <div class="content-box">
         <a class="back-button" href="{% url 'chat:chat_message' sendername=Sender_info.username receivername=CustomUser_info.username %}">私信联系</a>
+    </div>
+        <div class="content-box">
+        <a class="second-button" href={% url 'bbs:leavemes' receiver_username=CustomUser_info.username %}>{{ comment.owner.username }}给TA留言</a>
     </div>
 
     <div>
