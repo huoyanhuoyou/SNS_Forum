@@ -1,0 +1,31 @@
+{% load i18n %}
+
+{% if notifications %}
+    <div class="table-responsive">
+        <table class="table table-condensed table-hover table-striped">
+            <tr>
+                <th class="text-center">{% translate "时间" %}</th>
+                <th class="text-center">{% translate "内容" %}</th>
+                <th class="text-center">{% translate "发出者" %}</th>
+                <th class="text-center">{% translate "接收者" %}</th>
+            </tr>
+            {% for notification in notifications %}
+                <tr>
+                    <td class="text-center">{{ notification.timestamp }}</td>
+                    <td class="text-center">{{ notification.mes }}</td>
+                    <td class="text-center">{{ notification.sender.username }}</td>
+                    <td class="text-center">{{ notification.user.username }}</td>
+
+                        <a href="{% url 'notif:notifview' notification.id %}" class="btn btn-primary" title="View">
+                            <span class="glyphicon glyphicon-eye-open"></span>
+                        </a>
+                        <a href="{% url 'notif:notifrm' notification.id %}" class="btn btn-danger" title="Remove">
+                            <span class="glyphicon glyphicon-remove"></span>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+{% endif %}
