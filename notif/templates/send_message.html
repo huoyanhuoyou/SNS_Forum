@@ -2,30 +2,100 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="icon" href="/static/img/bbs_demo_icon.ico"/>
-    <title>编辑留言</title>
+    <title>个人信息</title>
+    <style>
+        body{overflow: hidden;}
+    .back-button{
+  padding: 14px 16px;
+  color: #fff;
+  border: none;
+  border-radius: 30px;
+  text-decoration: none;
+  background: #6E50E9;
+  position: absolute;
+  width: 80px;
+  height: 20px;
+  text-align: center;
+  line-height: 40px;
+  font-size: 16px;
+  top: 100px;
+  margin-left: 300px;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+
+
+    }
+    .back-button:hover{
+    background-color: mediumpurple;
+    }
+    .second-button{
+  padding: 14px 16px;
+  color: #fff;
+  border: none;
+  border-radius: 30px;
+  text-decoration: none;
+  background: #d300ff;
+  position: absolute;
+  width: 80px;
+  height: 20px;
+  text-align: center;
+  line-height: 40px;
+  font-size: 16px;
+  top: 160px;
+  margin-left: 300px;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.second-button:hover{
+  background-color: #e684ff;
+}
+    </style>
+    <script>
+    var messageList = document.getElementById('message-list');
+    var messageItems = messageList.getElementsByClassName('message');
+
+    var prevSender = null;
+    for (var i = 0; i < messageItems.length; i++) {
+        var currentSender = messageItems[i].getElementsByClassName('sender')[0].textContent;
+
+        if (currentSender === prevSender) {
+            // Hide current sender if it's the same as the previous sender
+            messageItems[i].getElementsByClassName('sender')[0].style.display = 'none';
+        } else {
+            prevSender = currentSender;
+        }
+    }
+</script>
 </head>
 <body>
-{% extends "bbs/base.html" %}
-{% block content %}
-    <h1>留言</h1>
+    {% extends "bbs/base.html" %}
 
-    {% if messages %}
-        <ul>
-            {% for message in messages %}
-                <li>{{ 留言 }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}
+    {% block content %}
+    <div class="content-box">
+        <a class="back-button" href="{% url 'chat:chat_message' sendername=Sender_info.username receivername=CustomUser_info.username %}">私信联系</a>
+    </div>
+        <div class="content-box">
+        <a class="second-button" href={% url 'bbs:leavemes' receiver_username=CustomUser_info.username %}>{{ comment.owner.username }}给TA留言</a>
+    </div>
 
-    <form method="post">
-        {% csrf_token %}
-        <label for="content">消息内容:</label><br>
-        <textarea name="content" id="content" cols="30" rows="5"></textarea><br>
-        <input type="submit" value="发送">
-    </form>
+    <div>
+    <h2>个人信息:</h2>
+    <p>Username: {{ CustomUser_info.username }}</p>
+    <p>Email: {{ CustomUser_info.email }}</p>
+    <p>Sno: {{ CustomUser_info.Sno }}</p>
+    <p>Phone: {{ CustomUser_info.phone }}</p>
+    <img src="{{ CustomUser_info.avatar.url }}"></img>
+    <!-- 添加其他字段的显示 -->
+    </div>
 
-    <a href="{% url 'notif:notiflist' %}">查看消息列表</a>
 {% endblock content %}
 </body>
 </html>
