@@ -186,7 +186,7 @@
             {% for comment in comments %}
                 <div style="margin-top: 5px;border-radius: 10px" class="comment-content">
                     <div style="border-radius: 10px 0 0 10px;background-color: darkgrey" class="user-info">
-                        <a class="username" href={% url 'bbs:user_info' username=article.owner.username  %}>{{ comment.owner.username }}</a>                     </div>
+                        <a class="username" href={% url 'bbs:user_info' username=comment.owner.username  %}>{{ comment.owner.username }}</a>                     </div>
                     <div style="border-radius:0 10px 10px 0" class="comment-text">
                         <span style="border-radius:0 10px 10px 0;white-space: normal;min-height: 160px;word-wrap: break-word">{{ comment.text|mdToHtml|safe }}</span><br/>
                         <span style="border-radius:0 10px 10px 0;margin-top: 157px">{{ comment.date_added|date:'M d, Y H:i'|mdToHtml|safe }}</span>
