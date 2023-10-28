@@ -1,0 +1,69 @@
+{% extends "bbs/base.html" %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>update email</title>
+</head>
+<body>
+
+    <div class="content-box">
+        {% if form.erors %}
+            <p>请输入正确的邮箱</p>
+        {% endif %}
+
+        <form action="{% url 'users:update_email' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <update_email-part>
+            <div class="main">
+                <!-- ... 其他输入字段 ... -->
+                     <div class="inp">
+				        <div class="right">
+                           <input type="email" name="email" autocomplete="email" required="" id="id_email" placeholder="请输入邮箱">
+                        </div>
+                     </div>
+                     <button style="width:100px " type="button" id="send_code_btn">发送验证码</button>
+                     <div style="margin-top: 10px" class="inp">
+				        <div  class="right">
+                           <input  type="text" name="verification_code" required="" id="id_verification_code" placeholder="请输入验证码">
+                        </div>
+                     </div>
+
+                <!-- ... 其他输入字段 ... -->
+
+                <button id="myButton" name="submit">更 新</button>
+                <input type="hidden" name="text" value="{% url 'bbs:index' %}"/>
+            </div>
+            </update_email-part>
+        </form>
+    </div>
+    <!-- 确保已引入 jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#send_code_btn").click(function () {
+                var email = $("#id_email").val();
+                $.ajax({
+                    url: "{% url 'users:send_verification_code' %}",
+                    type: "POST",
+                    data: {
+                        email: email,
+                        csrfmiddlewaretoken: '{{ csrf_token }}',
+                    },
+                    success: function (data) {
+                        if (data.success) {
+                            alert("验证码已发送到你的邮箱");
+                        } else {
+                            alert("错误: " + data.error);
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
+{% endblock content %}

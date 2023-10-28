@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Phone</title>
+</head>
+<body>
+    <h1>Update Phone</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Update Phone</button>
+    </form>
+</body>
+</html>
+{% end

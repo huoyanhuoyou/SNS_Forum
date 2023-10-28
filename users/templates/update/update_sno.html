@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Sno</title>
+</head>
+<body>
+    <h1>Update Sno</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Update Sno</button>
+    </form>
+
+    <!-- 确保已引入 jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#send_code_btn").click(function () {
+                var email = $("#id_email").val();
+                $.ajax({
+                    url: "{% url 'users:send_verification_code' %}",
+                    type: "POST",
+                    data: {
+                        email: email,
+                        csrfmiddlewaretoken: '{{ csrf_token }}',
+                    },
+                    success: function (data) {
+                        if (data.success) {
+                            alert("验证码已发送到你的邮箱");
+                        } else {
+                            alert("错误: " + data.error);
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
