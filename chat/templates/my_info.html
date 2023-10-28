@@ -66,9 +66,9 @@
     <div>
     <h2>历史消息:</h2>
     <ul id="message-list">
-        {% for message in sender_messages %}
+        {% for message in messages %}
             <li class="message">
-                <a href="{% url 'chat:chat_message' sendername=request.user.username receivername=message.sender.username %}">用户 {{ message.sender.username }}</a>
+                <a href="{% url 'chat:chat_message' sendername=request.user.username receivername=message %}">用户 {{ message }}</a>
             </li>
         {% empty %}
             <li>No messages found.</li>
