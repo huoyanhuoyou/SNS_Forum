@@ -3,6 +3,7 @@ from bbs import views
 from chat.views import user_info
 from notif.views import leave_message
 
+
 app_name = 'bbs'
 urlpatterns = [
     # 主页

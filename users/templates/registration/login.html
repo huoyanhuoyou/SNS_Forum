@@ -6,21 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>登录</title>
     <style>
-    body{
+     body{
         margin: 0;
         padding: 0;
         background-repeat: no-repeat;
         background-size: cover;
         overflow: hidden;
-        z-index: -2;
+         z-index: -2;
     }
-
-.float-box{
+    .float-box{
     position:absolute;
     z-index: 1;
      margin: auto;
     left: 40%;
 }
+
 
      logging-part{
 	display: flex;
@@ -46,7 +46,6 @@
 	line-height: 40px;
 	font-weight: 500;
 	font-size: 16px;
-
 }
 .inp{
 	display: flex;
@@ -88,7 +87,6 @@
 	outline: 0;
 }
 
-
 button{
 	width: calc(100% - 60px);
 	height:40px;
@@ -115,10 +113,8 @@ button{
   }
     }
 </script>
-
 </head>
 <body>
-
 {% extends "bbs/base.html" %}
 
 {% block content %}
@@ -161,7 +157,9 @@ button{
 
         </form>
     </div>
-<script type="module">
+
+
+    <script type="module">
         import * as THREE from "https://cdn.skypack.dev/three@0.136.0";
         import { OrbitControls } from "https://cdn.skypack.dev/three@0.136.0/examples/jsm/controls/OrbitControls";
         console.clear()
@@ -277,6 +275,7 @@ button{
         let url = canvas.toDataURL("image/png");
         document.body.style.backgroundImage = "url(" + url + ")";
     </script>
+
 {% endblock content %}
 
 </body>

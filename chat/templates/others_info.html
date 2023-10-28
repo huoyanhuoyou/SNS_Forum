@@ -79,10 +79,10 @@
     <div class="content-box">
         <a class="back-button" href="{% url 'chat:chat_message' sendername=Sender_info.username receivername=CustomUser_info.username %}">私信联系</a>
     </div>
+
         <div class="content-box">
         <a class="second-button" href={% url 'bbs:leavemes' receiver_username=CustomUser_info.username %}>{{ comment.owner.username }}给TA留言</a>
     </div>
-
     <div>
     <h2>个人信息:</h2>
     <p>Username: {{ CustomUser_info.username }}</p>

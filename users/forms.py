@@ -24,7 +24,6 @@ class PhoneUpdateForm(forms.ModelForm):
   fields = ['phone']
 
 class EmailUpdateForm(forms.ModelForm):
- email = forms.EmailField(required=True)
  class Meta:
   model = CustomUser
   fields = ['email']
@@ -33,7 +32,6 @@ class NameUpdateForm(forms.ModelForm):
  class Meta:
   model = CustomUser
   fields = ['username']
-
 
 class VerificationCodeForm(forms.Form):
  verification_code = forms.CharField(max_length=6, label='验证码', required=True)
