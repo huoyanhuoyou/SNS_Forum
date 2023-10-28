@@ -1,38 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <style>
-
-    form {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-    .but{
-  padding: 14px 16px;
-  color: #fff;
-  border: none;
-  border-radius: 15px;
-  text-decoration: none;
-  background: #86c7fc;
-  position: absolute;
-  width: 100px;
-  height: 20px;
-  text-align: center;
-  line-height: 40px;
-  font-size: 16px;
-  margin-left: 300px;
-  transform: translateX(-50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-}
-
-.but:hover{
-  background-color: #6fffdb;
-}
-    </style>
     <meta charset="UTF-8">
     <link rel="icon" href="/static/img/bbs_demo_icon.ico"/>
     <title>编辑留言</title>
@@ -42,16 +10,22 @@
 {% block content %}
     <h1>留言</h1>
 
-
+    {% if messages %}
+        <ul>
+            {% for message in messages %}
+                <li>{{ 留言 }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
 
     <form method="post">
         {% csrf_token %}
         <label for="content">消息内容:</label><br>
-        <textarea name="content" id="content" cols="100" rows="10"></textarea><br>
+        <textarea name="content" id="content" cols="30" rows="5"></textarea><br>
         <input type="submit" value="发送">
     </form>
 
-    <a class=but href="{% url 'notif:notiflist' %}">查看消息列表</a>
+    <a href="{% url 'notif:notiflist' %}">查看消息列表</a>
 {% endblock content %}
 </body>
 </html>
