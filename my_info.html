@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>个人信息</title>
+<link href="/static/css/style1.css" rel="stylesheet">
+    <script>
+    var messageList = document.getElementById('message-list');
+    var messageItems = messageList.getElementsByClassName('message');
+
+    var prevSender = null;
+    for (var i = 0; i < messageItems.length; i++) {
+        var currentSender = messageItems[i].getElementsByClassName('sender')[0].textContent;
+
+        if (currentSender === prevSender) {
+            // Hide current sender if it's the same as the previous sender
+            messageItems[i].getElementsByClassName('sender')[0].style.display = 'none';
+        } else {
+            prevSender = currentSender;
+        }
+    }
+</script>
+</head>
+<body>
+    {% extends "bbs/base.html" %}
+
+    {% block content %}
+
+<div style="margin-top: -21px;height: 720px;float:left"class="jotform-page">
+  <div class="left-area">
+    <div class="icon-area">
+      <svg width="42" height="42" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M42 21c0 11.597-9.403 21-21 21S0 32.6 0 21 9.402 0 21 0s21 9.403 21 21z" fill="#fff"/>
+  <path opacity=".05" d="M38.195 24.465l2.551-10.622A21.066 21.066 0 0 0 29.932 1.995L26.098 22.68 11.81 34.28l26.385-9.815z" fill="#000"/>
+  <path d="M21 0a21 21 0 0 0-5.66.778l-1.882 6.949 3.916.555 4.039 1.387 3.647 1.83 2.906-10.31A20.955 20.955 0 0 0 21 0z" fill="#F38632"/>
+  <path d="M15.745 27.782L11.81 34.28l.47-7.628 1.153.046 1.407.39.905.694z" fill="#4E4E4E"/>
+  <path d="M15.745 27.782l-.905-.694-1.407-.39-1.153-.046 1.179-18.925 3.916.555 4.039 1.387 3.647 1.829-9.316 16.284z" fill="url(#paint0_linear)"/>
+  <path d="M15.34.778L13.46 7.727l3.916.555L19.758.04a20.942 20.942 0 0 0-4.417.738z" fill="#F6A259"/>
+  <path d="M27.967 1.189a20.844 20.844 0 0 0-3.729-.94l-2.824 9.42L11.81 34.28l3.94-6.498 9.311-16.284 2.906-10.31z" fill="#1A1A1A" opacity=".2"/>
+  <path opacity=".15" d="M11.81 34.182l5.565-25.9-3.916-.555-1.649 26.455z" fill="#fff"/>
+  <defs>
+    <linearGradient id="paint0_linear" x1="12.306" y1="17.482" x2="24.188" y2="18.887" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F1CEBA"/>
+      <stop offset="1" stop-color="#B8846F"/>
+    </linearGradient>
+  </defs>
+</svg>
+    </div>
+    <div class="contacts-area">
+      <div class="header">
+        <h2>私信列表</h2>
+        <button>
+        <svg class="icon setting-icon" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path opacity=".6" fill-rule="evenodd" clip-rule="evenodd" d="M14.037 5.85l-1.084.63c.06.332.1.67.1 1.02s-.04.688-.1 1.02l1.084.63a.938.938 0 0 1 .339 1.275l-.926 1.617a.922.922 0 0 1-1.264.341l-1.095-.637a5.539 5.539 0 0 1-1.74 1.029v.792a.93.93 0 0 1-.925.933H6.574a.93.93 0 0 1-.925-.933v-.792a5.54 5.54 0 0 1-1.74-1.03l-1.095.638a.922.922 0 0 1-1.264-.341l-.926-1.617a.938.938 0 0 1 .34-1.275l1.083-.63a5.63 5.63 0 0 1-.1-1.02c0-.35.04-.688.1-1.02L.963 5.85a.938.938 0 0 1-.339-1.275l.926-1.617a.921.921 0 0 1 1.264-.341l1.095.637a5.535 5.535 0 0 1 1.74-1.029v-.792A.93.93 0 0 1 6.574.5h1.852a.93.93 0 0 1 .925.933v.792c.647.231 1.228.59 1.74 1.03l1.095-.638a.921.921 0 0 1 1.264.341l.926 1.617a.938.938 0 0 1-.34 1.275zm-.694-1.213l-.463-.808a.46.46 0 0 0-.632-.17l-1.286.748a4.611 4.611 0 0 0-2.536-1.48V1.9a.465.465 0 0 0-.463-.467h-.926a.465.465 0 0 0-.463.467v1.027a4.61 4.61 0 0 0-2.536 1.48l-1.286-.749a.46.46 0 0 0-.632.171l-.463.808a.469.469 0 0 0 .17.638l1.29.752A4.67 4.67 0 0 0 2.873 7.5c0 .517.092 1.01.246 1.474l-1.291.751a.469.469 0 0 0-.17.638l.463.808c.128.223.411.3.632.17l1.286-.748a4.611 4.611 0 0 0 2.536 1.48V13.1c0 .258.208.467.463.467h.926a.465.465 0 0 0 .463-.467v-1.027a4.611 4.611 0 0 0 2.536-1.48l1.286.749a.46.46 0 0 0 .632-.171l.463-.808a.469.469 0 0 0-.17-.638l-1.29-.751c.153-.465.245-.957.245-1.474 0-.516-.092-1.01-.246-1.473l1.291-.752a.469.469 0 0 0 .17-.638zM7.5 9.833A2.324 2.324 0 0 1 5.186 7.5 2.324 2.324 0 0 1 7.5 5.167 2.324 2.324 0 0 1 9.814 7.5 2.324 2.324 0 0 1 7.5 9.833zm0-3.733c-.767 0-1.388.627-1.388 1.4 0 .773.621 1.4 1.388 1.4.767 0 1.388-.627 1.388-1.4 0-.773-.621-1.4-1.388-1.4z" fill="#fff"/>
+</svg>
+        </button>
+      </div>
+      <div class="threads">
+        <div class="icon">
+          <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path opacity=".5" fill-rule="evenodd" clip-rule="evenodd" d="M8.5 14.5c-.512 0-1.01-.046-1.495-.127L3.5 16.5v-3.54C1.673 11.677.5 9.71.5 7.5c0-3.866 3.582-7 8-7s8 3.134 8 7-3.582 7-8 7zm0-13c-3.866 0-7 2.686-7 6 0 2.033 1.183 3.827 2.988 4.912l-.032 2.32 2.354-1.415a8.095 8.095 0 0 0 1.69.183c3.866 0 7-2.686 7-6s-3.134-6-7-6zM12 7H5a.5.5 0 0 1 0-1h7a.5.5 0 1 1 0 1zM6 9h5a.5.5 0 1 1 0 1H6a.5.5 0 1 1 0-1z" fill="#fff"/>
+</svg>
+        </div>
+        <p> 历史私信</p>
+      </div>
+      <br>
+      <div id="message-list">
+      <div class="friend-list">
+          {% for message in messages %}
+        <div class="message">
+        <div class="friend-info">
+          <svg width="7" height="6" viewBox="0 0 7 6" fill="none" xmlns="http://www.w3.org/2000/svg"> <path fill-rule="evenodd" clip-rule="evenodd" d="M3.50005 2.98023e-06C5.15688 2.98023e-06 6.50003 1.34316 6.50003 2.99998C6.50003 4.65684 5.15688 6 3.50005 6C1.84314 6 0.499984 4.65684 0.499984 2.99998C0.499984 1.34316 1.84314 2.98023e-06 3.50005 2.98023e-06Z" fill="#70CC16"/> </svg>
+          <img class="photo" src=message.sender.avatar>
+          <a style="margin-left: 10px;color: whitesmoke" href="{% url 'chat:chat_message' sendername=request.user.username receivername=message %}">用户 {{ message}}</a>
+        </div>
+        </div>
+         {% empty %}
+            <li>没有历史私信</li>
+        {% endfor %}
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="float:left;margin-top: -21px;height: 720px" class="message-area">
+
+  <div class="message-header">
+      <div class="message-wrapper">
+        <div class="left">
+          <h2>新消息</h2>
+          <div class="icon star"><svg  width="15" height="14" viewBox="0 0 15 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path opacity=".4" fill-rule="evenodd" clip-rule="evenodd" d="M11.006 8.934L11.834 14 7.5 11.607 3.166 14l.828-5.066L.5 5.357l4.83-.737L7.5 0l2.17 4.62 4.83.737-3.494 3.577zM9.128 5.389L7.5 1.887 5.857 5.389l-3.785.492L4.87 8.737l-.62 3.677 3.25-1.822 3.21 1.836-.58-3.677 2.77-2.827-3.772-.535z" fill="#000"/>
+            </svg></div>
+        </div>
+        <div class="right">
+          <div class="wrapper">
+            <button class="notification">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path opacity=".4" fill-rule="evenodd" clip-rule="evenodd" d="M9.275 12.134A2.325 2.325 0 0 1 7 14a2.325 2.325 0 0 1-2.275-1.866H.5L2.357 8.4V4.667C2.357 2.09 4.436 0 7 0c2.564 0 4.643 2.09 4.643 4.667V8.4l1.857 3.734H9.275zM7 13.067a1.39 1.39 0 0 0 1.308-.933H5.693A1.39 1.39 0 0 0 7 13.067zM10.714 8.4V4.667C10.714 2.605 9.051.934 7 .934S3.286 2.605 3.286 4.667V8.4l-1.393 2.8h10.214l-1.393-2.8z" fill="#000"/>
+</svg>
+            <div class="red-dot">
+          <svg  width="5" height="4" viewBox="0 0 5 4" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M2.50005 0.000183105C3.60463 0.000183105 4.50001 0.895589 4.50001 2.00018C4.50001 3.10472 3.60463 4.00018 2.50005 4.00018C1.39547 4.00018 0.5 3.10472 0.5 2.00018C0.5 0.895589 1.39547 0.000183105 2.50005 0.000183105Z" fill="#FD4948"/>
+              </svg></div>
+        </button>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="chat-area">
+      <div class="container">
+        <img class="photo" src="https://randomuser.me/api/portraits/men/55.jpg">
+        <div class="content">
+          <div class="info">
+            <h2>Jeshua Scott</h2>
+            <p>6:38 PM</p>
+          </div>
+          <p class="message"><span class="extension">@pierrhack</span> I did for 6 days in Iceland</p>
+        </div>
+      </div>
+
+      <div class="chat-break">
+        <div class="line"></div>
+        <p class="date-info">Monday, October 22nd</p>
+      </div>
+      <div class="container">
+        <img class="photo" src="https://randomuser.me/api/portraits/men/75.jpg">
+        <div class="content">
+          <div class="info">
+            <h2>Jeshua Scott</h2>
+            <p>6:38 PM</p>
+          </div>
+          <p class="message">Which country to visit next? This is a photo with my friends - celebrating in Bali <span class="extension"> my-top-places.jpg </span> <span class="icon-wrapper"><img class="icon" src="https://cdn.shopify.com/s/files/1/1061/1924/products/Sunglasses_Emoji_be26cc0a-eef9-49e5-8da2-169bb417cc0b_large.png?v=1480481057"></span>            </p>
+          <div class="attachment">
+            <img class="content-image" src="https://i.ibb.co/s9bGzy8/image.png">
+            <div class="reaction">
+              <img class="icon" src="https://i.ibb.co/r633sJq/smiling-face-with-heart-shaped-eyes-1f60d.png">
+              <p>3</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="chat-break">
+        <div class="line"></div>
+        <p class="date-info">Yesterday</p>
+        <div class="line"></div>
+      </div>
+      <div class="container">
+        <img class="photo" src="https://randomuser.me/api/portraits/women/90.jpg">
+        <div class="content">
+          <div class="info">
+            <h2>Aada Laine</h2>
+            <p>11:54 AM</p>
+          </div>
+          <p class="message"><span class="extension">@har_adams</span> wow it’s amazing, I want to buy a van and travelling next year <span> <img  class="icon" src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/apple/198/bus_1f68c.png"></span></p>
+        </div>
+
+      </div>
+      <div class="chat-break">
+        <div class="line"></div>
+        <p class="date-info">Today</p>
+        <div class="line"></div>
+      </div>
+      <div class="container">
+        <img class="photo" src="https://randomuser.me/api/portraits/women/57.jpg">
+        <div class="content">
+          <div class="info">
+            <h2>Nala Hester</h2>
+            <p>11:54 AM</p>
+          </div>
+          <p class="message">Working from a van in Australia isn’t feasible if you need internet. It may have improved over the last years but I spent some time in a camper van around Tasmania and internet was a real problem (and Tasmania is tiny compared to the rest of
+            the country).</p>
+        </div>
+      </div>
+      <div class="container">
+        <img class="photo" src="https://randomuser.me/api/portraits/men/66.jpg">
+        <div class="content">
+          <div class="info">
+            <h2>Ramon Bateman</h2>
+            <p>11:59 AM</p>
+          </div>
+          <p class="message"><span class="extension">
+            @aa_da</span> What's the reason for the van? Saving money or just like to get outside? If you've got a stable source of income you could always do some short term Airbnbs + buy a truck/topper, build a platform in the back. That way you can
+            always convert it back to a truck and sleep in an apartment if you want.</p>
+        </div>
+      </div>
+    </div>
+    <div class="type-area">
+      <div class="type-left">
+        <button class="icon">
+      <svg width="13" height="21" viewBox="0 0 13 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path opacity=".4" fill-rule="evenodd" clip-rule="evenodd" d="M.5 4.5c0-2 2-3.7 4.5-3.7s4.5 1.7 4.5 3.7v11.2c0 1.3-1.3 2.4-3 2.4s-3-1-3-2.4v-10H5v10c0 .6.7 1.2 1.5 1.2S8 16.3 8 15.7V4.5C8 3.1 6.7 2 5 2S2 3.1 2 4.5v11.2c0 2 2 3.7 4.5 3.7s4.5-1.7 4.5-3.7V3.3h1.5v13c-.4 2.4-3 4.3-6 4.3s-5.6-1.9-6-4.3V4.5z" fill="#000"/>
+            </svg>
+      </button>
+        <button class="icon">
+<svg width="14" height="21" viewBox="0 0 14 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path opacity=".4" fill-rule="evenodd" clip-rule="evenodd" d="M6 20.6a.6.6 0 0 1-.6-.6c0-.4.3-.6.6-.6h.6V18c-3-.3-5.6-2.6-6.1-5.5h1.2a5.7 5.7 0 0 0 11 0H14c-.5 3-3.1 5.2-6.1 5.5v1.3h.6c.3 0 .6.2.6.6 0 .3-.3.6-.6.6H6zm1.3-5c-2.4 0-4.3-1.9-4.3-4.3V5.1C3 2.7 4.9.8 7.3.8c2.3 0 4.2 2 4.2 4.3v6.2c0 2.4-1.9 4.3-4.2 4.3zm3-10.5a3 3 0 0 0-3-3 3 3 0 0 0-3.1 3v6.2a3 3 0 0 0 3 3.1 3 3 0 0 0 3.1-3V5z" fill="#000"/>
+</svg>
+        </button>
+      </div>
+   <div class="type-right">
+      </div>
+    </div>
+
+  </div>
+<div style="margin-top: -21px;height: 720px;" class="info-area">
+    <div style="background-image:url({{ CustomUser_info.avatar.url }})" class="profile-photo"></div>
+    <div class="info-content">
+      <div class="info-header">
+        <div class="info-wrapper">
+        <h2>{{ CustomUser_info.username }}</h2>
+        <svg width="6" height="7" viewBox="0 0 6 7" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M3.00006 0.5C4.6569 0.5 6.00005 1.84316 6.00005 3.49998C6.00005 5.15684 4.6569 6.5 3.00006 6.5C1.34315 6.5 0 5.15684 0 3.49998C0 1.84316 1.34315 0.5 3.00006 0.5Z" fill="#70CC16"/>
+</svg>
+        </div>
+        <p>Student</p>
+      </div>
+        <br>
+      <div class="social">
+        <button class="icon social-icon facebook">
+          <svg width="6" height="13" viewBox="0 0 6 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path opacity=".5" fill-rule="evenodd" clip-rule="evenodd" d="M1.5 12.5h2.2v-6h1.5l.2-2H3.7V3.2c0-.5 0-.7.5-.7h1.2V.5H3.8c-1.6 0-2.3.8-2.3 2.3v1.6H.4v2h1v6z" fill="#000"/>
+</svg>
+        </button>
+        <button  class="icon social-icon">
+          <svg width="13" height="10" viewBox="0 0 13 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path opacity=".5" fill-rule="evenodd" clip-rule="evenodd" d="M1 9c1 .6 2.4 1 3.7 1 4.6 0 7.2-3.6 7-6.8.5-.3 1-.7 1.3-1.1l-1.4.3c.5-.3.9-.7 1-1.2l-1.5.5C10.6 1.3 10 1 9.3 1 7.7 1 6.5 2.4 6.9 3.8c-2-.1-3.9-1-5.1-2.4-.6 1-.3 2.4.8 3-.4 0-.8 0-1.2-.2 0 1 .8 2 2 2.2h-1C2.5 7.5 3.4 8 4.5 8c-1 .8-2.3 1.1-3.6 1z" fill="#000"/>
+</svg>
+        </button>
+        <button  class="icon social-icon instagram">
+          <svg width="12" height="13" viewBox="0 0 12 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path opacity=".5" fill-rule="evenodd" clip-rule="evenodd" d="M8.2 4.3a2.9 2.9 0 0 0-4.2 0H.4V2.8c0-.8.4-1.5 1-2v2.6h.4V.6l.3-.1v2.9h.5v-3H3v3h.5v-3h6.2c1.3 0 2.3 1 2.3 2.4v1.5H8.2zm1-2.9c-.1 0-.3.2-.3.4V3c0 .2.2.4.4.4h1.2c.2 0 .4-.2.4-.4V1.8c0-.2-.2-.4-.4-.4H9.3zm-2.1 3c.2 0 .4.2.5.3.5.4.8 1 .8 1.8 0 1.3-1 2.3-2.3 2.3C5 8.8 4 7.8 4 6.5a2.4 2.4 0 0 1 1.3-2.2 2.2 2.2 0 0 1 1.9 0zm-2.6 2c0 1 .7 1.8 1.6 1.8 1 0 1.7-.8 1.7-1.7 0-1-.7-1.8-1.7-1.8-.9 0-1.6.8-1.6 1.8zm5.1 6h-7c-1.2 0-2.2-1-2.2-2.3V4.7h3.3c-.3.5-.5 1.1-.5 1.8a3 3 0 0 0 3 3 3 3 0 0 0 2.9-3c0-.7-.2-1.3-.6-1.8H12v5.4c0 1.3-1 2.3-2.3 2.3z" fill="#000"/>
+</svg>
+        </button>
+        <button  class="icon social-icon">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path opacity="0.5" fill-rule="evenodd" clip-rule="evenodd" d="M1.79959 3.6122C2.54101 3.6122 3.14208 3.00639 3.14208 2.25956C3.14208 1.51255 2.54101 0.907112 1.79959 0.907112C1.05825 0.907112 0.457187 1.51255 0.457187 2.25956C0.457187 3.00639 1.05825 3.6122 1.79959 3.6122ZM0.675475 11.9023H2.94548V4.57212H0.675475V11.9023ZM7.95728 6.41019C7.04879 6.41019 6.57406 7.02374 6.57406 8.05456V11.9023H4.39677V4.57212H6.57406V5.55941C6.57406 5.55941 7.22886 4.3483 8.78397 4.3483C10.3392 4.3483 11.4523 5.29759 11.4523 7.26101V11.9023H9.1932V8.05456C9.1932 6.99909 8.79215 6.41019 7.95728 6.41019Z" fill="black"/>
+</svg>
+
+        </button>
+        </div>
+      <div class="personal-info">
+        <p class="faded">Username</p>
+        <p class="dark">{{ CustomUser_info.username }}</p>
+      </div>
+      <div class="personal-info">
+        <p class="faded">Email</p>
+        <p class="dark">{{ CustomUser_info.email }}</p>
+      </div>
+      <div class="personal-info">
+        <p class="faded">Sno</p>
+        <p class="dark">{{ CustomUser_info.Sno }}</p>
+      </div>
+      <div class="personal-info">
+        <p class="faded">Phone</p>
+        <p class="dark">{{ CustomUser_info.phone }}</p>
+      </div>
+    </div>
+    </div>
+</div>
+
+{% endblock content %}
+</body>
+</html>
