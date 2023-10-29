@@ -46,7 +46,7 @@ def my_info(request, username):
         # 添加其他需要的字段
     }
 
-   sender_list = Message.objects.filter(recipient=user)
+    sender_list = Message.objects.filter(recipient=user)
     receiver_list = Message.objects.filter(sender=user)
 
     sender_messages = []
