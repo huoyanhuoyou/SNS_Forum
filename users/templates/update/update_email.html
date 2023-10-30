@@ -6,18 +6,6 @@
 <head>
     <meta charset="UTF-8">
     <title>update email</title>
-     <style>
-            .button{
-        background-color: mediumpurple;
-        text-decoration: none;
-        color: white;
-        padding-top: 2px;
-        padding-bottom: 2px;
-        padding-left: 7px;
-        padding-right: 7px;
-        border-radius: 5px;
-    }
-    </style>
 </head>
 <body>
 
@@ -36,7 +24,7 @@
                            <input type="email" name="email" autocomplete="email" required="" id="id_email" placeholder="请输入邮箱">
                         </div>
                      </div>
-                     <button style="width:100px " type="button" id="send_code_btn" class="button">发送验证码</button>
+                     <button style="width:100px " type="button" id="send_code_btn">发送验证码</button>
                      <div style="margin-top: 10px" class="inp">
 				        <div  class="right">
                            <input  type="text" name="verification_code" required="" id="id_verification_code" placeholder="请输入验证码">
@@ -45,7 +33,7 @@
 
                 <!-- ... 其他输入字段 ... -->
 
-                <button id="myButton" name="submit" class="button">更 新</button>
+                <button id="myButton" name="submit">更 新</button>
                 <input type="hidden" name="text" value="{% url 'bbs:index' %}"/>
             </div>
             </update_email-part>

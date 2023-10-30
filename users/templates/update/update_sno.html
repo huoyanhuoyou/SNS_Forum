@@ -3,31 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <title>Update Sno</title>
-    <style>
-            .button{
-        background-color: mediumpurple;
-        text-decoration: none;
-        color: white;
-        padding-top: 2px;
-        padding-bottom: 2px;
-        padding-left: 7px;
-        padding-right: 7px;
-        border-radius: 5px;
-    }
-    </style>
-
 </head>
 <body>
-    {% extends "bbs/base.html" %}
-
-    {% block content %}
     <h1>Update Sno</h1>
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <button class="button" type="submit">Update Sno</button>
+        <button type="submit">Update Sno</button>
     </form>
 
-    {% endblock %}
+    <!-- 确保已引入 jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#send_code_btn").click(function () {
+                var email = $("#id_email").val();
+                $.ajax({
+                    url: "{% url 'users:send_verification_code' %}",
+                    type: "POST",
+                    data: {
+                        email: email,
+                        csrfmiddlewaretoken: '{{ csrf_token }}',
+                    },
+                    success: function (data) {
+                        if (data.success) {
+                            alert("验证码已发送到你的邮箱");
+                        } else {
+                            alert("错误: " + data.error);
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+
 </body>
 </html>
