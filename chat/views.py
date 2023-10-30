@@ -47,26 +47,15 @@ def my_info(request, username):
     }
 
     sender_list = Message.objects.filter(recipient=user)
-    receiver_list = Message.objects.filter(sender=user)
-
     sender_messages = []
     for message in sender_list:
-        if message.sender.username not in sender_messages:
-            sender_messages.append(message.sender.username)
-    receiver_messages = []
-    for message in receiver_list:
-        if message.recipient.username not in receiver_messages:
-            receiver_messages.append(message.recipient.username)
-    messages = sender_messages
-    for message in receiver_messages:
-        if message not in messages:
-            messages.append(message)
+        if message.sender.username not in [msg.sender.username for msg in sender_messages]:
+            sender_messages.append(message)
+
     context = {
         'Sender_info':Sender_info,
         'CustomUser_info': CustomUser_info,
-        'sender_messages': sender_messages,
-        'receiver_messages':receiver_messages,
-        'messages':messages
+        'sender_messages': sender_messages
     }
 
     return render(request, 'my_info.html', context)

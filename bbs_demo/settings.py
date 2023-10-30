@@ -84,9 +84,9 @@ WSGI_APPLICATION = 'bbs_demo.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'my_db',  # 数据库名称
+        'NAME': 'newdatabase',  # 数据库名称
         'USER': 'root',        # 数据库用户名
-        'PASSWORD': 'root',  # 数据库密码（用单引号或双引号括起来）
+        'PASSWORD': 'zxy13835652936',  # 数据库密码（用单引号或双引号括起来）
         'HOST': 'localhost',   # 数据库主机
         'PORT': '3306',        # 数据库端口（作为字符串）
     }
@@ -120,7 +120,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'Asia/Shanghai'
+TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
@@ -151,15 +151,15 @@ AUTH_USER_MODEL = 'users.CustomUser'
 
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+MEDIA_ROOT = os.path.join(BASE_DIR,"media")
 
 
 #邮件相关配置
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'# 发送邮件配置
 EMAIL_HOST = 'smtp.qq.com'# 服务器名称
 EMAIL_PORT = 465# 服务端口
-EMAIL_HOST_USER = '813107842@qq.com' # 填写自己邮箱
-EMAIL_HOST_PASSWORD = 'vjvfyrmwnmtybehi'# 在邮箱中设置的客户端授权密码
+EMAIL_HOST_USER = '2307302370@qq.com' # 填写自己邮箱
+EMAIL_HOST_PASSWORD = 'bjhnbmhufohbeaec'# 在邮箱中设置的客户端授权密码
 EMAIL_FROM = 'moxie'# 收件人看到的发件人
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 #EMAIL_USE_TLS = True   #是否使用TLS安全传输协议
