@@ -65,7 +65,7 @@ def send_verification_code(request):
 @login_required
 def update_sno(request):
     if request.method == 'POST':
-        form = PhoneUpdateForm(request.POST, instance=request.user)
+        form = SnoUpdateForm(request.POST, instance=request.user)
         if form.is_valid():
             form.save()
             return redirect('chat:my_info', username=request.user.username)  # 重定向到用户信息页面
