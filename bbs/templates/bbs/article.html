@@ -168,6 +168,16 @@
             {% if present_page == 1 %}
                 <div class="article-content1">
                     <div class="user-info1">
+                        {% if comment.owner.avatar %}
+                            <div style="width: 60px; height: 60px;border-radius: 50%;   margin-right: 7px;overflow: hidden;  ">
+                                <img src="{{ comment.owner.avatar.url }}" alt="{{comment.owner.username }}'s avatar" style="width: 100%; height: 100%;margin-right: 20px;">
+                            </div>
+                        {% else %}
+                            <div style="width: 60px;height: 60px;border-radius: 50%;   margin-right: 7px; overflow: hidden;" >
+                                <img src=/static/img/path-to-default-avatar.jpg alt="Default avatar" style="width: 100%; height: 100%;margin-right: 20px;">
+                            </div>
+
+                        {% endif %}
                         <a class="username" href={% url 'bbs:user_info' username=article.owner.username %}>{{ article.owner.username }}</a>
                     </div>
                     <div class="article-text1">
@@ -186,6 +196,16 @@
             {% for comment in comments %}
                 <div style="margin-top: 5px;border-radius: 10px" class="comment-content">
                     <div style="border-radius: 10px 0 0 10px;background-color: darkgrey" class="user-info">
+                        {% if comment.owner.avatar %}
+                            <div style="width: 60px; height: 60px;border-radius: 50%;   margin-right: 7px;overflow: hidden;  ">
+                                <img src="{{ comment.owner.avatar.url }}" alt="{{comment.owner.username }}'s avatar" style="width: 100%; height: 100%;margin-right: 20px;">
+                            </div>
+                        {% else %}
+                            <div style="width: 60px;height: 60px;border-radius: 50%;   margin-right: 7px; overflow: hidden;" >
+                                <img src=/static/img/path-to-default-avatar.jpg alt="Default avatar" style="width: 100%; height: 100%;margin-right: 20px;">
+                            </div>
+
+                        {% endif %}
                         <a class="username" href={% url 'bbs:user_info' username=comment.owner.username  %}>{{ comment.owner.username }}</a>                     </div>
                     <div style="border-radius:0 10px 10px 0" class="comment-text">
                         <span style="border-radius:0 10px 10px 0;white-space: normal;min-height: 160px;word-wrap: break-word">{{ comment.text|mdToHtml|safe }}</span><br/>

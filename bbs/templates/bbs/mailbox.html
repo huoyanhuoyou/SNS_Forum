@@ -453,6 +453,7 @@ p{
   overflow:auto;
 }
 .header{
+    color: black;
   display:flex;
   justify-content:space-between;
   align-items:center;
@@ -763,6 +764,54 @@ span.extension{
 .star{
   margin-left:6px;
 }
+textarea {width:93%; min-height:60px; overflow:hidden;}
+.artitle{
+    color: #1db0f4;
+    line-height: 1em;
+    letter-spacing: 2px;
+    word-spacing: 0.5em;
+    text-indent: 4em;
+    font-size: 1.3em;
+    font-family: 微软雅黑;
+    padding: 3px 0px;
+    margin: 0px;
+    width: 100%;
+}
+
+.container{
+            padding: 10px;
+            background-color: burlywood;
+            text-align: center;
+            margin: 0 auto;
+        }
+        img{
+            margin:0px -120px 20px 10px;
+            width: 120px;
+            height: 120px;
+            border-radius: 8px;
+            /* 设置图片旋转角度 */
+            -webkit-transform : rotate(5deg);
+            -webkit-transition: -webkit-transform 1s lin;
+
+        }
+        .content{
+            width: 650px;
+            height: 90px;
+            position: relative;
+            left: 160px;
+            background-color: #666;
+            border-radius: 25px;
+            padding: 15px;
+            margin-top: 10px;
+            /* 设置自动换行 */
+            word-wrap: break-word;
+        }
+        .float{
+            float: left;
+        }
+        .clear{
+            clear: both;
+        }
     </style>
 </head>
 <body>
@@ -770,33 +819,11 @@ span.extension{
 {% block content %}
      <form action="{% url 'bbs:mailshow' %}" method="post" class="elegant-aero">
             {% csrf_token %}
-                 <h1>Contact Form
+                 <h1>留言箱
 
-                          <span>Please fill all the texts in the fields.</span>
+                          <span>对于本项目有什么建议吗。</span>
 
                  </h1>
-
-                 <label>
-
-                          <span>Themplate :</span>
-
-                          <select id="template" name="themplate" onchange="changeStyle();">
-
-                                   <option value="basic-grey">basic-grey</option>
-
-                                   <option value="elegant-aero">elegant-aero</option>
-
-                                   <option value="smart-green">smart-green</option>
-
-                                   <option value="white-pink">white-pink</option>
-
-                                   <option value="bootstrap-frm">bootstrap-frm</option>
-
-                                   <option value="dark-matter">dark-matter</option>
-
-                          </select>
-
-                 </label>
 
                  <label>
 
@@ -826,18 +853,6 @@ span.extension{
 
                  <label>
 
-                          <span>Subject :</span><select name="selection">
-
-                                   <option value="Job Inquiry">Job Inquiry</option>
-
-                                   <option value="General Question">General Question</option>
-
-                          </select>
-
-                 </label>
-
-                 <label>
-
                           <span>&nbsp;</span>
 
                           <button type="submit">Send</button>
@@ -845,59 +860,70 @@ span.extension{
                  </label>
 
          </form>
-        <div class="channel-list">
-        <h2>Messages:</h2>
-        <ul>
+
+        <div class="header">
+            <h1>留言板</h1>
+        </div>
         {% for message in messages %}
             <li>
-                <div class="channel-name">
-                    <p>{{ message.name }} ({{ message.email }})</p>
-                </div>
-                <div class="channel">
-                    <p>{{ message.content }}</p>
-                </div>
-                <div class="time">
-                    <p>{{ message.timestamp }}</p>
+                <div class="container">
+                    <div class="float">
+                        <img src="/static/img/avatar.png">
+                    </div>
+                    <div id="float">
+                        <div class="content">
+                            <p>{{ message.name }} ({{ message.email }})</p>
+                            <div class="article-content">
+                                <p>{{ message.content }}</p>
+                            </div>
+                            <div class="time">
+                                <p>{{ message.timestamp }}</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </li>
         {% empty %}
-            <div class="channel">
-                <li>No messages yet.</li>
+            <div class="content">
+                <li>您需要实名留言后才可以看到他人的留言。</li>
             </div>
 
         {% endfor %}
         </ul>
+        <div id="container">
+            <div style="margin:0px -120px 20px 10px;width: 180px;height: 180px;border-radius: 8px;-webkit-transform : rotate(5deg);-webkit-transition: -webkit-transform 1s lin;">
+                <img src="/static/img/mailbox.jpg">
+                <p style="font-size: 24px;margin-left: 0px;padding: 5px 0 -30px -11px;color: #1db0f4">开发人员信箱</p>
+            </div>
+            <div id="float">
+                <div class="artitle">
+                        <p class="artitle">zhengxieyu@sjtu.edu.cn</p>
+                        <p class="artitle">qwer1234@sjtu.edu.cn</p>
+                        <p class="artitle">wzh815918208@sjtu.edu.cn</p>
+                        <p class="artitle">aquatarkus@sjtu.edu.cn</p>
+                        <p class="artitle">zhulinxue@sjtu.edu.cn</p>
+                </div>
+            </div>
+
         </div>
-    <div class="contacts-area">
-        <p class="header">开发人员邮箱: </p>
-        <p class="line">zhengxieyu@sjtu.edu.cn</p>
-        <p class="line">qwer1234@sjtu.edu.cn</p>
-        <p class="line">aquatarkus@sjtu.edu.cn</p>
-        <p class="line">aquatarkus@sjtu.edu.cn</p>
-        <p class="line">zhulinxue@sjtu.edu.cn</p>
-        <p class="line">Developer Group:</p>
-    </div>
-        <img src="/static/img/developer_group_image.jpg" alt="Developer Group">
+<script>
+        $.fn.autoHeight = function(){
+                function autoHeight(elem){
+                elem.style.height = 'auto';
+                elem.scrollTop = 0; //防抖动
+                elem.style.height = elem.scrollHeight + 'px';
+                }
+                this.each(function(){
+                autoHeight(this);
+                $(this).on('keyup', function(){
+                autoHeight(this);
+                });
+                });
+        }
+        $('textarea[autoHeight]').autoHeight();
+</script>
 
-        <script>
 
-                 function changeStyle() {
-
-            var template = document.getElementById("template");
-
-            var index = template.selectedIndex;
-
-            var templatevalue = template.options[index].value;
-
-            var templatecss = document.getElementById("templatecss");
-
-            templatecss.setAttribute("href","css/" + templatevalue + ".css");
-
-            document.getElementsByTagName("form")[0].setAttribute("class",templatevalue);
-
-          }
-
-         </script>
 
 
 {% endblock content %}

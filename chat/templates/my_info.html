@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <title>个人信息</title>
     <style>
-
         body{overflow: hidden;}
     .back-button{
   padding: 14px 16px;
@@ -31,32 +30,6 @@
     .back-button:hover{
     background-color: mediumpurple;
     }
-
-    .container{
-        margin: auto;
-        background-color: white;
-        border-radius: 10px;
-        width: 60%;
-        padding: 40px;
-    }
-
-    h2{
-        font-weight: bold;
-        border-bottom: solid 1px;
-        padding-bottom: 5px;
-        margin-bottom: 20px;
-    }
-
-    .button{
-        background-color: mediumpurple;
-        text-decoration: none;
-        color: white;
-        padding-top: 2px;
-        padding-bottom: 2px;
-        padding-left: 7px;
-        padding-right: 7px;
-        border-radius: 5px;
-    }
     </style>
     <script>
     var messageList = document.getElementById('message-list');
@@ -80,46 +53,22 @@
 
     {% block content %}
 
-        <div class="container" style="margin-top: 30px;">
-        <h2>个人信息:</h2>
-        <div>
-            <div style="width: 70%;">
-                <span style="font-weight: bold;">Username:</span> {{ CustomUser_info.username }}
-            </div>
-            <div style="width: 30%;">
-                <a class="button" href="{% url 'users:update_name' %}">修改</a>
-            </div>
-        </div>
-        <div>
-            <div style="width: 70%;">
-                <p><span style="font-weight: bold;">Email:</span> {{ CustomUser_info.email }}</p>
-            </div>
-            <div style="width: 30%;">
-                <a class="button" href="{% url 'users:update_email' %}">修改</a>
-            </div>
-        </div>
-        <div>
-            <div style="width: 70%;">
-                <p><span style="font-weight: bold;">Sno:</span> {{ CustomUser_info.Sno }}</p>
-            </div>
-            <div style="width: 30%;">
-                <a class="button" href="{% url 'users:update_sno' %}">修改</a>
-            </div>
-        </div>
-        <div>
-            <div style="width: 70%;">
-                <p><span style="font-weight: bold;">Phone:</span> {{ CustomUser_info.phone }}</p>
-            </div>
-            <div style="width: 30%;">
-                <a class="button" href="{% url 'users:update_phone' %}">修改</a>
-            </div>
-        </div>
+    <div>
+    <h2>个人信息:</h2>
+    <p>Username: {{ CustomUser_info.username }}</p><a href="{% url 'users:update_name' %}">修改</a>
+    <p>Email: {{ CustomUser_info.email }}</p><a href="{% url 'users:update_email' %}">修改</a>
+    <p>Sno: {{ CustomUser_info.Sno }}</p><a href="{% url 'users:update_sno' %}">修改</a>
+    <p>Phone: {{ CustomUser_info.phone }}</p><a href="{% url 'users:update_phone' %}">修改</a>
+    <img src="{{ CustomUser_info.avatar.url }}"></img>
+    <!-- 添加其他字段的显示 -->
+    </div>
 
-    <h2 style="margin-top: 20px;">历史消息:</h2>
+    <div>
+    <h2>历史消息:</h2>
     <ul id="message-list">
-        {% for message in messages %}
+        {% for message in sender_messages %}
             <li class="message">
-                <a href="{% url 'chat:chat_message' sendername=request.user.username receivername=message %}">用户 {{ message }}</a>
+                <a href="{% url 'chat:chat_message' sendername=request.user.username receivername=message.sender.username %}">用户 {{ message.sender.username }}</a>
             </li>
         {% empty %}
             <li>No messages found.</li>

@@ -1,3 +1,5 @@
+import os.path
+
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
@@ -11,7 +13,7 @@ from django.core.mail import send_mail
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .forms import SnoUpdateForm,PhoneUpdateForm,EmailUpdateForm,NameUpdateForm,VerificationCodeForm
-
+from django.conf import settings
 # Create your views here.
 def register(request):
     """注册页面"""
@@ -34,7 +36,10 @@ def register(request):
                 # ...例如创建用户、登录用户...
                 print(form.cleaned_data['avatar'])
                 new_user = form.save(commit = False)
-                new_user.avatar = form.cleaned_data['avatar']
+                avatar = form.cleaned_data['avatar']
+                new_user.avatar = avatar
+                #file_path = os.path.join(settings.MEDIA_ROOT, 'avatars', new_user.avatar)
+                #new_user.avatar.save(file_path,new_user.avatar)
                 new_user.save()
 
                 login(request, new_user)
@@ -57,7 +62,7 @@ def send_verification_code(request):
 
     # 发送邮件（在生产环境中应该异步完成）
     try:
-        send_mail('你的验证码', '你的验证码是: ' + code, '1972190885@qq.com', [email], fail_silently=False)
+        send_mail('你的验证码', '你的验证码是: ' + code, '2307302370@qq.com', [email], fail_silently=False)
         return JsonResponse({'success': True})
     except Exception as e:
         return JsonResponse({'success': False, 'error': str(e)})
@@ -115,3 +120,5 @@ def update_name(request):
     else:
         form = NameUpdateForm(instance=request.user)
     return render(request, 'update/update_name.html', {'form': form})
+
+
