@@ -146,6 +146,10 @@
 .refresh-btn1 a:hover{
     background-color: #408458;
 }
+
+.time{
+    text-align: right;
+}
     </style>
 </head>
 <body>
@@ -181,12 +185,15 @@
                         <a class="username" href={% url 'bbs:user_info' username=article.owner.username %}>{{ article.owner.username }}</a>
                     </div>
                     <div class="article-text1">
-                        <span>{{ article.date_added|date:'M d, Y H:i' |mdToHtml|safe}}</span><br><br>
+                    <br><br>
+                        <br><br>
+
                     </div>
                 </div>
                 <div style="border-radius: 0 0 20px 20px " class="article-content2">
                     <div style="border-radius: 0 0 20px 20px " class="article-text2">
-                        <span style="border-radius: 0 0 20px 20px;white-space: normal;min-height: 160px;word-wrap: break-word">{{ article.text|mdToHtml|safe }}</span>
+                        <div style="border-radius: 0 0 20px 20px;white-space: normal;min-height: 160px;word-wrap: break-word">{{ article.text|mdToHtml|safe }}</div>
+                        <div class="time" style="margin-right: 50px">{{ article.date_added|date:'M d, Y H:i' |mdToHtml|safe}}</div><br><br>
                     </div>
                 </div>
             {% endif %}
@@ -208,8 +215,8 @@
                         {% endif %}
                         <a class="username" href={% url 'bbs:user_info' username=comment.owner.username  %}>{{ comment.owner.username }}</a>                     </div>
                     <div style="border-radius:0 10px 10px 0" class="comment-text">
-                        <span style="border-radius:0 10px 10px 0;white-space: normal;min-height: 160px;word-wrap: break-word">{{ comment.text|mdToHtml|safe }}</span><br/>
-                        <span style="border-radius:0 10px 10px 0;margin-top: 157px">{{ comment.date_added|date:'M d, Y H:i'|mdToHtml|safe }}</span>
+                        <div style="border-radius:0 10px 10px 0;white-space: normal;min-height: 160px;word-wrap: break-word">{{ comment.text|mdToHtml|safe }}</div><br/>
+                        <div class="time" style="border-radius:0 10px 10px 0;margin-right: 50px">{{ comment.date_added|date:'M d, Y H:i'|mdToHtml|safe }}</div>
                     </div>
                 </div>
             {% empty %}
