@@ -146,6 +146,21 @@
 .refresh-btn1 a:hover{
     background-color: #408458;
 }
+
+.button{
+        background-color: mediumpurple;
+        text-decoration: none;
+        color: white;
+        padding-top: 2px;
+        padding-bottom: 2px;
+        padding-left: 7px;
+        padding-right: 7px;
+        border-radius: 5px;
+    }
+
+.time{
+    text-align: right;
+}
     </style>
 </head>
 <body>
@@ -155,7 +170,7 @@
     <div class="content-box">
         <div class="page-head">
             <h1>article in {{ article.plate.text }}</h1>
-            <a class="to-plate" href="{% url 'bbs:plate' article.plate.id 1 %}">返回话题 </a>
+            <a class="to-plate" href="{% url 'bbs:plate' article.plate.id 1 %}">返回论坛</a>
             <br>
             <a class="reply-page1" href="{% url 'bbs:reply' article.id %}">发表回复 &raquo</a>
         </div>
@@ -168,15 +183,28 @@
             {% if present_page == 1 %}
                 <div class="article-content1">
                     <div class="user-info1">
-                        <a class="username" href={% url  'chat:chat_message' sendername=request.user.username  receivername=article.owner.username  %}>{{ article.owner.username }}</a>
+                        {% if article.owner.avatar %}
+                            <div style="width: 60px; height: 60px;border-radius: 50%;   margin-right: 7px;overflow: hidden;  ">
+                                <img src="{{ article.owner.avatar.url }}" alt="{{article.owner.username }}'s avatar" style="width: 100%; height: 100%;margin-right: 20px;">
+                            </div>
+                        {% else %}
+                            <div style="width: 60px;height: 60px;border-radius: 50%;   margin-right: 7px; overflow: hidden;" >
+                                <img src=/static/img/path-to-default-avatar.jpg alt="Default avatar" style="width: 100%; height: 100%;margin-right: 20px;">
+                            </div>
+
+                        {% endif %}
+                        <a class="button" href={% url 'bbs:user_info' username=article.owner.username %}>{{ article.owner.username }}</a>
                     </div>
                     <div class="article-text1">
-                        <span>{{ article.date_added|date:'M d, Y H:i' |mdToHtml|safe}}</span><br><br>
+                    <br><br>
+                        <br><br>
+
                     </div>
                 </div>
                 <div style="border-radius: 0 0 20px 20px " class="article-content2">
                     <div style="border-radius: 0 0 20px 20px " class="article-text2">
-                        <span style="border-radius: 0 0 20px 20px;white-space: normal;min-height: 160px;word-wrap: break-word">{{ article.text|mdToHtml|safe }}</span>
+                        <div style="border-radius: 0 0 20px 20px;white-space: normal;min-height: 160px;word-wrap: break-word">{{ article.text|mdToHtml|safe }}</div>
+                        <div class="time" style="margin-right: 50px">{{ article.date_added|date:'M d, Y H:i' |mdToHtml|safe}}</div><br><br>
                     </div>
                 </div>
             {% endif %}
@@ -186,10 +214,21 @@
             {% for comment in comments %}
                 <div style="margin-top: 5px;border-radius: 10px" class="comment-content">
                     <div style="border-radius: 10px 0 0 10px;background-color: darkgrey" class="user-info">
-                        <a class="username" href={% url  'chat:chat_message' sendername=request.user.username  receivername=comment.owner.username   %}>{{ comment.owner.username }}</a>                     </div>
+                        {% if comment.owner.avatar %}
+                            <div style="width: 60px; height: 60px;border-radius: 50%;   margin-right: 7px;overflow: hidden;  ">
+                                <img src="{{ comment.owner.avatar.url }}" alt="{{comment.owner.username }}'s avatar" style="width: 100%; height: 100%;margin-right: 20px;">
+                            </div>
+                        {% else %}
+                            <div style="width: 60px;height: 60px;border-radius: 50%;   margin-right: 7px; overflow: hidden;" >
+                                <img src=/static/img/path-to-default-avatar.jpg alt="Default avatar" style="width: 100%; height: 100%;margin-right: 20px;">
+                            </div>
+
+                        {% endif %}
+                        <a class="button" href={% url 'bbs:user_info' username=comment.owner.username  %}>{{ comment.owner.username }}</a>                     </div>
+
                     <div style="border-radius:0 10px 10px 0" class="comment-text">
-                        <span style="border-radius:0 10px 10px 0;white-space: normal;min-height: 160px;word-wrap: break-word">{{ comment.text|mdToHtml|safe }}</span><br/>
-                        <span style="border-radius:0 10px 10px 0;margin-top: 157px">{{ comment.date_added|date:'M d, Y H:i'|mdToHtml|safe }}</span>
+                        <div style="border-radius:0 10px 10px 0;white-space: normal;min-height: 160px;word-wrap: break-word">{{ comment.text|mdToHtml|safe }}</div><br/>
+                        <div class="time" style="border-radius:0 10px 10px 0;margin-right: 50px">{{ comment.date_added|date:'M d, Y H:i'|mdToHtml|safe }}</div>
                     </div>
                 </div>
             {% empty %}
@@ -248,7 +287,8 @@
                 "delay": 1000,
             },
             element: $('textarea[name=text]')[0],
-            spellcheck: false
+            spellcheck: false,
+            autoDownloadFontAwesome: true,
         }
     );
 </script>
