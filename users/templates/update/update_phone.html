@@ -3,14 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <title>Update Phone</title>
+    <style>
+            .button{
+        background-color: mediumpurple;
+        text-decoration: none;
+        color: white;
+        padding-top: 2px;
+        padding-bottom: 2px;
+        padding-left: 7px;
+        padding-right: 7px;
+        border-radius: 5px;
+    }
+    </style>
+
 </head>
 <body>
+    {% extends "bbs/base.html" %}
+
+    {% block content %}
+
     <h1>Update Phone</h1>
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Update Phone</button>
+        <button class="button" type="submit">Update Phone</button>
     </form>
+
+    {% endblock %}
 </body>
 </html>
 {% end
