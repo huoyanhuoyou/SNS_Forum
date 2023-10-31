@@ -1,15 +1,16 @@
-from users.models import CustomUser
 from django.db import models
-from django.shortcuts import render
 
-class Message(models.Model):
-    sender = models.ForeignKey(CustomUser,related_name='send_messages',on_delete=models.CASCADE,null=True,verbose_name='发送者')
-    recipient = models.ForeignKey(CustomUser,related_name='receive_messages',on_delete=models.CASCADE,null=True,verbose_name='接收者')
-    create_time = models.DateTimeField(auto_now_add=True,null=True,verbose_name='创建时间')
-    message = models.TextField(null=True,verbose_name='消息')
-    unread = models.BooleanField(default=True,verbose_name='是否未读')
-    objects = models.Manager
+# Create your models here.
+from django.db import models
+from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
+# Create your models here.
+
+class CustomUser(AbstractUser):
+    avatar = models.ImageField(upload_to='avatars/%Y/%m/%d/', null=True, blank=True,default="path-to-default-avatar.jpg")  # 头像
+    Sno = models.CharField(max_length=20, unique=True)  # 学号
+    phone = models.CharField(max_length=15, blank=True, null=True)  # 电话
+    email = models.EmailField(unique=True, verbose_name="邮箱")
+
     def __str__(self):
-        if self.message:
-            return self.message
-
+        return 'user{}'.format(self.username)

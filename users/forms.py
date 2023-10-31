@@ -23,6 +23,10 @@ class PhoneUpdateForm(forms.ModelForm):
   model = CustomUser
   fields = ['phone']
 
+class AvatarUpdateForm(forms.ModelForm):
+ class Meta:
+  model = CustomUser
+  fields = ['avatar']
 class EmailUpdateForm(forms.ModelForm):
  class Meta:
   model = CustomUser
