@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>update avatar</title>
+
+     <style>
+            .button{
+        background-color: mediumpurple;
+        text-decoration: none;
+        color: white;
+        padding-top: 2px;
+        padding-bottom: 2px;
+        padding-left: 7px;
+        padding-right: 7px;
+        border-radius: 5px;
+    }
+    </style>
+</head>
+<body>
+ {% extends "bbs/base.html" %}
+
+    {% block content %}
+
+    <h1>上传头像</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" name="avatar">
+        <button class="button" type="submit">上传头像</button>
+    </form>
+
+{% endblock %}
+</body>
+</html>
