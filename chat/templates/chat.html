@@ -69,7 +69,7 @@
         <div class="message">
         <div class="friend-info">
           <svg width="7" height="6" viewBox="0 0 7 6" fill="none" xmlns="http://www.w3.org/2000/svg"> <path fill-rule="evenodd" clip-rule="evenodd" d="M3.50005 2.98023e-06C5.15688 2.98023e-06 6.50003 1.34316 6.50003 2.99998C6.50003 4.65684 5.15688 6 3.50005 6C1.84314 6 0.499984 4.65684 0.499984 2.99998C0.499984 1.34316 1.84314 2.98023e-06 3.50005 2.98023e-06Z" fill="#70CC16"/> </svg>
-          <img class="photo" src=message.sender.avatar>
+          <img class="photo" src="{{ message.sender.avatar.url }}">
           <a href="{% url 'chat:my_info' username=request.user.username %}">返回个人信息</a>
         </div>
         </div>
@@ -178,8 +178,18 @@
     </div>
 
   </div>
+
 <div style="margin-top: -21px;height: 720px;" class="info-area">
-    <div style="background-image:url({{ CustomUser_info.avatar.url }})" class="profile-photo"></div>
+
+    {% if user.avatar %}
+        <div style="width: 200px; height: 200px;margin-right: 7px;overflow: hidden;  ">
+            <img src="{{ receiver.avatar.url }}" alt="{{receiver.username }}'s avatar" style="width: 100%; height: 100%;margin-right: 20px;">
+        </div>
+    {% else %}
+         <div style="width: 200px;height: 200px;margin-right: 7px; overflow: hidden;" >
+             <img src=/static/img/path-to-default-avatar.jpg alt="Default avatar" style="width: 100%; height: 100%;margin-right: 20px;">
+         </div>
+    {% endif %}
     <div class="info-content">
       <div class="info-header">
         <div class="info-wrapper">
